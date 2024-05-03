@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:latest
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    env_file:
+      - ./envs/db.env
+
+  app:
+    build: .
+    command: gunicorn your_project_name.wsgi:application --workers 4 --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./envs/app.env
+
+volumes:
+  postgres_data_prod:

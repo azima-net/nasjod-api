@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:latest
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    env_file:
+      - ./envs/db.env
+
+  app:
+    container_name: appnasjod
+    build: .
+    command: >
+      sh -c "python manage.py wait_for_db &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./eljemaah_api:/app
+      - static_volume:/vol/web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./envs/app.env
+
+volumes:
+  postgres_data_dev:
+  static_volume:
