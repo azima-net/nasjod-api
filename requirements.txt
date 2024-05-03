@@ -1,0 +1,13 @@
+pillow==10.3.0
+flake8>=3.9.0,<4.0.1
+black==22.3.0
+pytest>=7.0.0,<=7.4.2
+drf-yasg==1.21.4
+phonenumbers==8.13.35
+psycopg2-binary==2.9.9
+
+# django
+Django==5.0
+djangorestframework==3.15.1
+pytest-django>=4.4.0,<=4.5.2
+django-geojson==4.0.0
