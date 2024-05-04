@@ -1,6 +1,6 @@
 # Use an official Python runtime as a parent image
 FROM python:3.12-slim
-LABEL maintainer="eljemaah"
+LABEL maintainer="nasjod"
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -22,7 +22,7 @@ COPY requirements.txt /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY ./eljemaah_api /app/
+COPY ./nasjod /app/
 
 COPY ./scripts /scripts
 RUN chmod +x /scripts/*
