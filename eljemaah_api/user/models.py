@@ -13,7 +13,7 @@ from django.contrib.auth.models import (
 from django.core.exceptions import ValidationError
 
 from core._helpers import user_photo_file_path
-from core.models import Address
+from core.models import Address, GDPR_compliance
 
 class UserManager(BaseUserManager):
     def create_user(
@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
     """Custom user model that supports using email instead of username"""
 
     SEX = [
