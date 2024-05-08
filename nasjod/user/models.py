@@ -12,7 +12,7 @@ from django.contrib.auth.models import (
 )
 from django.core.exceptions import ValidationError
 
-from core._helpers import user_photo_file_path
+from core._helpers import image_path_upload
 from core.models import Address, GDPR_compliance
 
 class UserManager(BaseUserManager):
@@ -67,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     address = models.OneToOneField(Address, related_name='address_user',
                                    on_delete=models.SET_NULL, null=True, blank=True)
-    photo = models.ImageField(null=True, blank=True, upload_to=user_photo_file_path)
+    photo = models.ImageField(null=True, blank=True, upload_to=image_path_upload)
 
     objects = UserManager()
 
