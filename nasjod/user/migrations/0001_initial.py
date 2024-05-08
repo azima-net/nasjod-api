@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
                     models.ImageField(
                         blank=True,
                         null=True,
-                        upload_to=core._helpers.user_photo_file_path,
+                        upload_to=core._helpers.image_path_upload,
                     ),
                 ),
                 (

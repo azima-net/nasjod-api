@@ -2,9 +2,9 @@ import os
 from uuid import uuid4
 
 
-def user_photo_file_path(instance, filename):
-    """Generate file path for a new user photo"""
+def image_path_upload(instance, filename):
+    """Generate file path for a new file"""
+    model_name = instance.__class__.__name__.lower()
     ext = filename.split(".")[-1]
-    filename = f"{uuid4()}.{ext}"
-
-    return os.path.join("upload/user/", filename)
+    new_filename = f"{uuid4()}.{ext}"
+    return os.path.join(f"upload/{model_name}", new_filename)
