@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Masjid
+from .serializers import MasjidSerializer
 
-# Create your views here.
+
+class MasjidViewSet(viewsets.ModelViewSet):
+    queryset = Masjid.objects.all()
+    serializer_class = MasjidSerializer
+

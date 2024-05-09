@@ -15,10 +15,10 @@ class Masjid(models.Model):
 
     name = models.CharField(max_length=255)
     address = models.OneToOneField(Address, related_name='address_masjid',
-                                   on_delete=models.SET_NULL, null=False, blank=False)
+                                   on_delete=models.SET_NULL, null=True, blank=True)
     telephone = models.CharField(max_length=20)
     photo = models.ImageField(null=True, blank=True, upload_to=image_path_upload)
-    cover = models.ImageField(upload_to='masjid_covers/')
+    cover = models.ImageField(null=True, blank=True, upload_to=image_path_upload)
     size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='M')
 
     # Boolean fields
@@ -32,6 +32,9 @@ class Masjid(models.Model):
     salat_al_janaza = models.BooleanField(default=False)
     iftar_ramadhan = models.BooleanField(default=False)
     itikef = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Masajid"
 
     def __str__(self):
         return self.name
