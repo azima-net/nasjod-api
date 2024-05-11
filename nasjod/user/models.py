@@ -34,12 +34,23 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
-        """Create and saves a new superuser"""
-        user = self.create_user(email, password=password)
-        user.is_staff = True
-        user.is_superuser = True
-        user.is_active = True
+    def create_superuser(self, email, password, **extra_fields):
+        """Create and save a new superuser with all permissions."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+
+        # Checks to ensure proper superuser flags
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        # Create user already setting superuser and staff flags
+        user = self.create_user(email, password=password, **extra_fields)
+        # user.is_staff = True
+        # user.is_superuser = True
+        # user.is_active = True
         user.save(using=self._db)
 
         return user
@@ -74,22 +85,23 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
     USERNAME_FIELD = "email"
 
     def clean(self):
-        """Validate age is below 15 and phone number is correctly formatted."""
-        # Validate age
-        today = date.today()
-        age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
-        if age >= settings.MINIMUM_AGE_LIMIT:
-            raise ValidationError({'birth_date': 'Age must be below 15.'})
+        if not getattr(self, 'is_superuser', False):
+            """Validate age is below 15 and phone number is correctly formatted."""
+            # Validate age
+            today = date.today()
+            age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+            if age >= settings.MINIMUM_AGE_LIMIT:
+                raise ValidationError({'birth_date': 'Age must be below 15.'})
 
-        # Validate phone number
-        if self.phone_number:
-            try:
-                phone_number_obj = phonenumbers.parse(self.phone_number, None)
-                if not phonenumbers.is_valid_number(phone_number_obj):
-                    raise ValidationError({'phone_number': 'Invalid phone number.'})
-                self.phone_number = phonenumbers.format_number(phone_number_obj, phonenumbers.PhoneNumberFormat.E164)
-            except phonenumbers.NumberParseException:
-                raise ValidationError({'phone_number': 'Invalid phone number format.'})
+            # Validate phone number
+            if self.phone_number:
+                try:
+                    phone_number_obj = phonenumbers.parse(self.phone_number, None)
+                    if not phonenumbers.is_valid_number(phone_number_obj):
+                        raise ValidationError({'phone_number': 'Invalid phone number.'})
+                    self.phone_number = phonenumbers.format_number(phone_number_obj, phonenumbers.PhoneNumberFormat.E164)
+                except phonenumbers.NumberParseException:
+                    raise ValidationError({'phone_number': 'Invalid phone number format.'})
 
 
     def save(self, *args, **kwargs):
@@ -99,3 +111,4 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
 
     def __str__(self) -> str:
         return self.email
+
