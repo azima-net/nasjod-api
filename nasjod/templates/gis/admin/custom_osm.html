@@ -1,0 +1,9 @@
+{% extends "gis/admin/openlayers.html" %}
+{% block extra_layers %}
+  var newLayer = new ol.layer.Tile({
+      source: new ol.source.OSM({
+          url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      })
+  });
+  map.addLayer(newLayer);  // Directly add to map
+{% endblock %}
