@@ -60,7 +60,6 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
         ("Male", "male"),
         ("Female", "female"),
     ]
-
     username = models.CharField(default="", max_length=50, blank=True)
     identifier = models.CharField(default=uuid4, max_length=50, editable=False)
     email = models.EmailField(max_length=255, unique=True)
