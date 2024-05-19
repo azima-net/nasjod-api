@@ -1,12 +1,19 @@
 import phonenumbers
 
 from django.db import models
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
-from core.models import Address
+from core.models import Address, ObjectBase
 from core._helpers import image_path_upload
 
 
-class Masjid(models.Model):
+
+User = get_user_model()
+
+class Masjid(ObjectBase):
     SIZE_CHOICES = (
         ('S', 'Small'),
         ('M', 'Medium'),
@@ -22,6 +29,7 @@ class Masjid(models.Model):
     size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='M')
 
     # Boolean fields
+    is_active = models.BooleanField(default=True)
     parking = models.BooleanField(default=False)
     disabled_access = models.BooleanField(default=False)
     ablution_room = models.BooleanField(default=False)
@@ -33,8 +41,24 @@ class Masjid(models.Model):
     iftar_ramadhan = models.BooleanField(default=False)
     itikef = models.BooleanField(default=False)
 
+    # Users
+    managers = models.ManyToManyField(User, related_name='managed_masjids', blank=True)
+    assistants = models.ManyToManyField(User, related_name='assisted_masjids', blank=True)
+    mousallis = models.ManyToManyField(User, related_name='favorite_masjids', blank=True)
+    imams = models.ManyToManyField(User, related_name='led_masjids', blank=True)
+
     class Meta:
         verbose_name_plural = "Masajid"
 
     def __str__(self):
         return self.name
+
+@receiver(m2m_changed, sender=Masjid.managers.through)
+@receiver(m2m_changed, sender=Masjid.assistants.through)
+def validate_unique_roles(sender, instance, action, reverse, model, pk_set, **kwargs):
+    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
+        managers = set(instance.managers.all())
+        assistants = set(instance.assistants.all())
+
+        if managers.intersection(assistants):
+            raise ValidationError("A user cannot be both a manager and an assistant in the same masjid.")

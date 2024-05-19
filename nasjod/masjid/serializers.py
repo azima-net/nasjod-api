@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Masjid
@@ -5,7 +6,13 @@ from core.models import Address
 from core.serializers import AddressSerializer
 
 
+User = get_user_model()
+
 class MasjidSerializer(serializers.ModelSerializer):
+    managers = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
+    assistants = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
+    mousallis = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
+    imams = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
     address = AddressSerializer()
 
     class Meta:
