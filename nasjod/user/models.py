@@ -48,9 +48,6 @@ class UserManager(BaseUserManager):
 
         # Create user already setting superuser and staff flags
         user = self.create_user(email, password=password, **extra_fields)
-        # user.is_staff = True
-        # user.is_superuser = True
-        # user.is_active = True
         user.save(using=self._db)
 
         return user
@@ -90,7 +87,7 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
             # Validate age
             today = date.today()
             age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
-            if age >= settings.MINIMUM_AGE_LIMIT:
+            if age < settings.MINIMUM_AGE_LIMIT:
                 raise ValidationError({'birth_date': 'Age must be below 15.'})
 
             # Validate phone number
@@ -111,4 +108,3 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
 
     def __str__(self) -> str:
         return self.email
-

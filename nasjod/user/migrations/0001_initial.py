@@ -5,6 +5,13 @@ import django.db.models.deletion
 import uuid
 from django.db import migrations, models
 
+def create_groups(apps, schema_editor):
+    Group = apps.get_model('auth', 'Group')
+
+    # Create groups
+    group_names = ['Manager', 'Assistant', 'Mousalli', 'Imam']
+    for name in group_names:
+        Group.objects.get_or_create(name=name)
 
 class Migration(migrations.Migration):
 
@@ -16,6 +23,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(create_groups),
         migrations.CreateModel(
             name="User",
             fields=[

@@ -11,3 +11,4 @@ Django==5.0
 djangorestframework==3.15.1
 pytest-django>=4.4.0,<=4.5.2
 django-geojson==4.0.0
+django-filter==24.2
