@@ -84,10 +84,11 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
         if not getattr(self, 'is_superuser', False):
             """Validate age is below 15 and phone number is correctly formatted."""
             # Validate age
-            today = date.today()
-            age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
-            if age < settings.MINIMUM_AGE_LIMIT:
-                raise ValidationError({'birth_date': 'Age must be below 15.'})
+            if settings.VALIDATE_AGE:
+                today = date.today()
+                age = today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+                if age < settings.MINIMUM_AGE_LIMIT:
+                    raise ValidationError({'birth_date': 'Age must be below 15.'})
 
             # Validate phone number
             if self.phone_number:
