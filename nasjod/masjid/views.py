@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django.conf import settings
 
 from .models import Masjid
 from .serializers import MasjidSerializer
@@ -11,6 +12,7 @@ class MasjidViewSet(viewsets.ModelViewSet):
     queryset = Masjid.objects.all()
     serializer_class = MasjidSerializer
     filterset_class = MasjidFilter
+    lookup_field = "uuid"
     
     def get_permissions(self):
         if self.action in ('create', 'destroy'):
