@@ -1,30 +1,16 @@
+from core.tests.fixtures import *
+
 import pytest
 from datetime import datetime
-
-from rest_framework.test import APIClient
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth import get_user_model
-
 from core.models import Address
-
 
 User = get_user_model()
 
+# Override or add additional fixtures specific to app1
 @pytest.fixture
 def user_model():
     return get_user_model()
-
-@pytest.fixture
-def address():
-    return Address.objects.create(
-        street="123 Main St",
-        city="Hometown",
-        state="CA",
-        zip_code="12345",
-        country="USA",
-        coordinates="POINT(-118.243683 34.052235)"
-    )
 
 @pytest.fixture
 def user_data(address):
@@ -50,11 +36,6 @@ def user(user_model, user_data):
     user.save()
     return user
 
-
-@pytest.fixture
-def api_client():
-    return APIClient()
-
 @pytest.fixture
 def user_payload():
     return {
@@ -68,3 +49,10 @@ def user_payload():
         "password": "password123",
         "confirm_password": "password123"
     }
+
+@pytest.fixture
+def admin_user():
+    return User.objects.create_superuser(
+        email='admin@example.com',
+        password='adminpassword123'
+    )

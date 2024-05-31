@@ -62,3 +62,53 @@ def validate_unique_roles(sender, instance, action, reverse, model, pk_set, **kw
 
         if managers.intersection(assistants):
             raise ValidationError("A user cannot be both a manager and an assistant in the same masjid.")
+
+
+class PrayerTime(models.Model):
+    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name='prayer_times')
+    date = models.DateField()
+    fajr = models.TimeField()
+    sunrise = models.TimeField()
+    dhuhr = models.TimeField()
+    asr = models.TimeField()
+    maghrib = models.TimeField()
+    isha = models.TimeField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['masjid', 'date'], name='unique_prayer_time_per_day_per_masjid')
+        ]
+        ordering = ['date']
+
+    def __str__(self):
+        return f"{self.masjid.name} - {self.date}"
+
+
+class JumuahPrayerTime(models.Model):
+    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name='jumuah_prayer_times')
+    date = models.DateField()
+    jumuah_time = models.TimeField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['masjid', 'date', 'jumuah_time'], name='unique_jumuah_time_per_day_per_masjid')
+        ]
+        ordering = ['date', 'jumuah_time']
+
+    def __str__(self):
+        return f"{self.masjid.name} - {self.date} - {self.jumuah_time}"
+
+
+class EidPrayerTime(models.Model):
+    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name='eid_prayer_times')
+    date = models.DateField()
+    eid_time = models.TimeField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['masjid', 'date', 'eid_time'], name='unique_eid_time_per_day_per_masjid')
+        ]
+        ordering = ['date', 'eid_time']
+
+    def __str__(self):
+        return f"{self.masjid.name} - {self.date} - {self.eid_time}"
