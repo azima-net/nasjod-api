@@ -5,6 +5,7 @@ pytest>=7.0.0,<=7.4.2
 drf-yasg==1.21.4
 phonenumbers==8.13.35
 psycopg2-binary==2.9.9
+drf-spectacular==0.27.2
 
 # django
 Django==5.0

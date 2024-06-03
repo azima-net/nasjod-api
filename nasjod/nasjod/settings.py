@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_filters",
-    'rest_framework',
+    "rest_framework",
+    "drf_spectacular",
     "django.contrib.gis",
     "core",
     "authentification",
@@ -189,6 +190,9 @@ REST_FRAMEWORK = {
 
     # API versioning
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    
+    #SCHEMA_OPENAPI
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -211,3 +215,23 @@ VALIDATE_AGE = False
 MINIMUM_AGE_LIMIT = 10
 
 MASJID_LOOKUP_FIELD = "uuid"
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Nasjod API',
+    'DESCRIPTION': 'API documentation for the Nasjod project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SECURITY': [
+        {
+            'BearerAuth': []
+        }
+    ],
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SECURITY_DEFINITIONS': {
+        'BearerAuth': {
+            'type': 'http',
+            'scheme': 'bearer',
+            'bearerFormat': 'JWT',
+        }
+    },
+}
