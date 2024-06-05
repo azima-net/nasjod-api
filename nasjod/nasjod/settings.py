@@ -142,6 +142,9 @@ AUTH_USER_MODEL = "user.User"
 
 # REST_FRAMEWORK
 REST_FRAMEWORK = {
+    #SCHEMA_OPENAPI
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
     # Authentication settings
      'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -190,9 +193,6 @@ REST_FRAMEWORK = {
 
     # API versioning
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
-    
-    #SCHEMA_OPENAPI
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -221,17 +221,17 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API documentation for the Nasjod project',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'SECURITY': [
-        {
-            'BearerAuth': []
-        }
-    ],
-    'COMPONENT_SPLIT_REQUEST': True,
-    'SECURITY_DEFINITIONS': {
-        'BearerAuth': {
-            'type': 'http',
-            'scheme': 'bearer',
-            'bearerFormat': 'JWT',
-        }
-    },
+    # 'SECURITY': [
+    #     {
+    #         'BearerAuth': []
+    #     }
+    # ],
+    # 'COMPONENT_SPLIT_REQUEST': True,
+    # 'SECURITY_DEFINITIONS': {
+    #     'BearerAuth': {
+    #         'type': 'http',
+    #         'scheme': 'bearer',
+    #         'bearerFormat': 'JWT',
+    #     }
+    # },
 }
