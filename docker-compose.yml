@@ -9,10 +9,13 @@ services:
       - ./envs/db.env
 
   app:
+    container_name: appnasjod
     build: .
-    command: gunicorn your_project_name.wsgi:application --workers 4 --bind 0.0.0.0:8000
+    volumes:
+      - ./nasjod:/app
+      - static_volume:/vol/web
     ports:
-      - "8000:8000"
+      - "9000:9000"
     depends_on:
       - db
     env_file:
