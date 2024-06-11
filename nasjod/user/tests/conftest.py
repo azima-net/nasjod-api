@@ -49,10 +49,3 @@ def user_payload():
         "password": "password123",
         "confirm_password": "password123"
     }
-
-@pytest.fixture
-def admin_user():
-    return User.objects.create_superuser(
-        email='admin@example.com',
-        password='adminpassword123'
-    )

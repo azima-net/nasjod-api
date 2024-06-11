@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from django.db import IntegrityError
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -11,7 +12,8 @@ from core.serializers import AddressSerializer
 User = get_user_model()
 
 
-class BaseMasjidRelatedSerializer(serializers.ModelSerializer):
+class BasePrayerTimeSerializer(serializers.ModelSerializer):
+    hijri_date = serializers.CharField(read_only=True)
     class Meta:
         abstract = True
 
@@ -27,17 +29,18 @@ class BaseMasjidRelatedSerializer(serializers.ModelSerializer):
         validated_data['masjid'] = masjid
         return super().update(instance, validated_data)
 
-class PrayerTimeSerializer(BaseMasjidRelatedSerializer):
+class PrayerTimeSerializer(BasePrayerTimeSerializer):
     class Meta:
         model = PrayerTime
         exclude = ['masjid']
+        read_only_fields = ['masjid']
 
-class JumuahPrayerTimeSerializer(BaseMasjidRelatedSerializer):
+class JumuahPrayerTimeSerializer(BasePrayerTimeSerializer):
     class Meta:
         model = JumuahPrayerTime
         exclude = ['masjid']
 
-class EidPrayerTimeSerializer(BaseMasjidRelatedSerializer):
+class EidPrayerTimeSerializer(BasePrayerTimeSerializer):
     class Meta:
         model = EidPrayerTime
         exclude = ['masjid']
@@ -106,13 +109,10 @@ class MasjidSerializer(serializers.ModelSerializer):
         return masjid
 
     def update(self, instance, validated_data):
-        address_data = validated_data.pop('address')
-        address = instance.address
-        for attr, value in address_data.items():
-            setattr(address, attr, value)
-        address.save()
-
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        return instance
+        address_data = validated_data.pop('address', None)
+        if address_data:
+            address = instance.address
+            for attr, value in address_data.items():
+                setattr(address, attr, value)
+            address.save()
+        return super().update(instance, validated_data)

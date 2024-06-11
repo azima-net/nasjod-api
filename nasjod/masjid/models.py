@@ -1,9 +1,10 @@
 import phonenumbers
+from hijri_converter import Gregorian
 
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, post_delete
 from django.dispatch import receiver
 
 from core.models import Address, ObjectBase
@@ -52,6 +53,15 @@ class Masjid(ObjectBase):
 
     def __str__(self):
         return self.name
+    
+    def clean(self):
+        super().clean()
+        if Masjid.objects.filter(address=self.address).exclude(id=self.id).exists():
+            raise ValidationError("A Masjid with this address already exists.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
 @receiver(m2m_changed, sender=Masjid.managers.through)
 @receiver(m2m_changed, sender=Masjid.assistants.through)
@@ -63,16 +73,37 @@ def validate_unique_roles(sender, instance, action, reverse, model, pk_set, **kw
         if managers.intersection(assistants):
             raise ValidationError("A user cannot be both a manager and an assistant in the same masjid.")
 
+@receiver(post_delete, sender=Masjid)
+def delete_associated_address(sender, instance, **kwargs):
+    if instance.address:
+        instance.address.delete()
 
-class PrayerTime(models.Model):
-    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name='prayer_times')
+class BasePrayerTime(models.Model):
+    masjid = models.ForeignKey('Masjid', on_delete=models.CASCADE)
     date = models.DateField()
+    hijri_date = models.CharField(max_length=50, editable=False, default="")
+
+    class Meta:
+        abstract = True
+        ordering = ['date']
+
+    def save(self, *args, **kwargs):
+        self.hijri_date = str(Gregorian(self.date.year, self.date.month, self.date.day).to_hijri())
+        super().save(*args, **kwargs)
+
+class PrayerTime(BasePrayerTime):
     fajr = models.TimeField()
     sunrise = models.TimeField()
     dhuhr = models.TimeField()
     asr = models.TimeField()
     maghrib = models.TimeField()
     isha = models.TimeField()
+
+    fajr_iqama = models.IntegerField(null=True, blank=True,)  # Iqama time in minutes after Athan
+    dhuhr_iqama = models.IntegerField(null=True, blank=True,)
+    asr_iqama = models.IntegerField(null=True, blank=True,)
+    maghrib_iqama = models.IntegerField(null=True, blank=True,)
+    isha_iqama = models.IntegerField(null=True, blank=True,)
 
     class Meta:
         constraints = [
@@ -83,32 +114,28 @@ class PrayerTime(models.Model):
     def __str__(self):
         return f"{self.masjid.name} - {self.date}"
 
-
-class JumuahPrayerTime(models.Model):
-    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name='jumuah_prayer_times')
-    date = models.DateField()
+class JumuahPrayerTime(BasePrayerTime):
     jumuah_time = models.TimeField()
 
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['masjid', 'date', 'jumuah_time'], name='unique_jumuah_time_per_day_per_masjid')
         ]
-        ordering = ['date', 'jumuah_time']
+
+    def clean(self):
+        if self.date.weekday() != 4:  # 4 represents Friday
+            raise ValidationError("Jumuah prayer time can only be set on a Friday.")
 
     def __str__(self):
         return f"{self.masjid.name} - {self.date} - {self.jumuah_time}"
 
-
-class EidPrayerTime(models.Model):
-    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name='eid_prayer_times')
-    date = models.DateField()
+class EidPrayerTime(BasePrayerTime):
     eid_time = models.TimeField()
 
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['masjid', 'date', 'eid_time'], name='unique_eid_time_per_day_per_masjid')
         ]
-        ordering = ['date', 'eid_time']
 
     def __str__(self):
         return f"{self.masjid.name} - {self.date} - {self.eid_time}"

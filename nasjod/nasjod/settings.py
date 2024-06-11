@@ -214,7 +214,7 @@ SIMPLE_JWT = {
 VALIDATE_AGE = False
 MINIMUM_AGE_LIMIT = 10
 
-MASJID_LOOKUP_FIELD = "uuid"
+MASJID_LOOKUP_FIELD = "masjid_uuid"
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Nasjod API',
@@ -235,3 +235,9 @@ SPECTACULAR_SETTINGS = {
     #     }
     # },
 }
+
+# Define the STATIC_ROOT
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Ensure you have STATIC_URL defined
+STATIC_URL = '/static/'

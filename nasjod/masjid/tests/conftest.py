@@ -1,4 +1,5 @@
-from datetime import date, time
+from datetime import datetime, timedelta
+
 from core.tests.fixtures import *
 
 import pytest
@@ -19,29 +20,6 @@ def address():
         zip_code="3011",
         country="Tunisia",
         coordinates="POINT (10.780081214495699 34.79051319533724)"
-    )
-
-@pytest.fixture
-def manager_user():
-    user = User.objects.create_user(
-        email='manager@example.com',
-        username='manageruser',
-        password='password123',
-        first_name='Manager',
-        last_name='User',
-        sex='Male',
-        birth_date='1980-01-01',
-        phone_number='+21624000000',
-        is_active=True,
-        is_staff=True
-    )
-    return user
-
-@pytest.fixture
-def assistant_user():
-    return User.objects.create_user(
-        email='assistant@example.com',
-        password='password123'
     )
 
 @pytest.fixture
@@ -73,8 +51,8 @@ def masjid_payload():
     }
 
 @pytest.fixture
-def masjid(address):
-    return Masjid.objects.create(
+def masjid(address, manager_user, assistant_user, mousalli_user, imam_user):
+    masjid = Masjid.objects.create(
         name="Sakiet Eddayer Mosque",
         address=address,
         telephone="",
@@ -92,32 +70,40 @@ def masjid(address):
         iftar_ramadhan=True,
         itikef=False
     )
+    masjid.managers.add(manager_user)
+    masjid.assistants.add(assistant_user)
+    masjid.mousallis.add(mousalli_user)
+    masjid.imams.add(imam_user)
+    return masjid
 
 @pytest.fixture
 def prayer_time(masjid):
     return PrayerTime.objects.create(
         masjid=masjid,
-        date=date(2023, 5, 30),
-        fajr=time(4, 30),
-        sunrise=time(6, 0),
-        dhuhr=time(12, 0),
-        asr=time(15, 30),
-        maghrib=time(18, 45),
-        isha=time(20, 0)
+        date=datetime.today().date(),
+        fajr="05:00",
+        sunrise="06:30",
+        dhuhr="12:00",
+        asr="15:30",
+        maghrib="18:00",
+        isha="19:30"
     )
 
 @pytest.fixture
 def jumuah_prayer_time(masjid):
+    # Ensure the date is a Friday
+    today = datetime.today()
+    next_friday = today + timedelta((4 - today.weekday()) % 7)
     return JumuahPrayerTime.objects.create(
         masjid=masjid,
-        date=date(2023, 5, 30),
-        jumuah_time=time(13, 30)
+        date=next_friday.date(),
+        jumuah_time="13:00"
     )
 
 @pytest.fixture
 def eid_prayer_time(masjid):
     return EidPrayerTime.objects.create(
         masjid=masjid,
-        date=date(2023, 6, 1),
-        eid_time=time(8, 0)
+        date=datetime.today().date(),
+        eid_time="08:00"
     )

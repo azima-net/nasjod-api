@@ -122,18 +122,18 @@ admin.site.register(Masjid, MasjidAdmin)
 
 @admin.register(PrayerTime)
 class PrayerTimeAdmin(admin.ModelAdmin):
-    list_display = ('masjid', 'date', 'fajr', 'dhuhr', 'asr', 'maghrib', 'isha')
+    list_display = ('masjid', 'date', 'hijri_date', 'fajr', 'dhuhr', 'asr', 'maghrib', 'isha')
     list_filter = ('masjid', 'date')
     search_fields = ('masjid__name',)
 
 @admin.register(JumuahPrayerTime)
 class JumuahPrayerTimeAdmin(admin.ModelAdmin):
-    list_display = ('masjid', 'date', 'jumuah_time')
+    list_display = ('masjid', 'date', 'hijri_date', 'jumuah_time')
     list_filter = ('masjid', 'date')
     search_fields = ('masjid__name',)
 
 @admin.register(EidPrayerTime)
 class eidPrayerTimeAdmin(admin.ModelAdmin):
-    list_display = ('masjid', 'date', 'eid_time')
+    list_display = ('masjid', 'date', 'hijri_date', 'eid_time')
     list_filter = ('masjid', 'date')
     search_fields = ('masjid__name',)

@@ -26,23 +26,23 @@ class IsMousalli(BasePermission):
         return request.user.attended_masjids.exists()
 
 
-# Specific Masjid Check Permissions
+# Specific Masjid Check Permissions    
 
 class IsManagerOfMasjid(BasePermission):
     def has_permission(self, request, view):
-        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD)
+        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD) or view.kwargs.get("uuid")
         if not masjid_uuid:
             return False
         try:
             masjid = Masjid.objects.get(uuid=masjid_uuid)
-            return request.user in masjid.managers.all()
+            return masjid.managers.filter(id=request.user.id).exists()
         except Masjid.DoesNotExist:
             return False
 
 
 class IsAssistantOfMasjid(BasePermission):
     def has_permission(self, request, view):
-        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD)
+        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD) or view.kwargs.get("uuid")
         if not masjid_uuid:
             return False
         try:
@@ -51,10 +51,33 @@ class IsAssistantOfMasjid(BasePermission):
         except Masjid.DoesNotExist:
             return False
 
+class IsManagerOrAssistant(BasePermission):
+    def has_permission(self, request, view):
+        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD) or view.kwargs.get("uuid")
+        if not masjid_uuid:
+            return False
+        try:
+            masjid = Masjid.objects.get(uuid=masjid_uuid)
+            return masjid.managers.filter(id=request.user.id).exists() or masjid.assistants.filter(id=request.user.id).exists()
+        except Masjid.DoesNotExist:
+            return False
+
+class IsAdminOrManagerOrAssistant(BasePermission):
+    def has_permission(self, request, view):
+        if request.user.is_staff:
+            return True
+        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD) or view.kwargs.get("uuid")
+        if not masjid_uuid:
+            return False
+        try:
+            masjid = Masjid.objects.get(uuid=masjid_uuid)
+            return masjid.managers.filter(id=request.user.id).exists() or masjid.assistants.filter(id=request.user.id).exists()
+        except Masjid.DoesNotExist:
+            return False
 
 class IsImamOfMasjid(BasePermission):
     def has_permission(self, request, view):
-        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD)
+        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD) or view.kwargs.get("uuid")
         if not masjid_uuid:
             return False
         try:
@@ -66,7 +89,7 @@ class IsImamOfMasjid(BasePermission):
 
 class IsMousalliOfMasjid(BasePermission):
     def has_permission(self, request, view):
-        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD)
+        masjid_uuid = view.kwargs.get(settings.MASJID_LOOKUP_FIELD) or view.kwargs.get("uuid")
         if not masjid_uuid:
             return False
         try:
