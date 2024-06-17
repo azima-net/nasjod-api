@@ -15,3 +15,4 @@ django-geojson==4.0.0
 django-filter==24.2
 pytest-django==4.8
 djangorestframework-simplejwt==5.3.1
+django-cors-headers==4.3.1
