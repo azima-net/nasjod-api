@@ -54,6 +54,8 @@ class MasjidSerializer(serializers.ModelSerializer):
     prayer_times = PrayerTimeSerializer(many=True, read_only=True)
     jumuah_prayer_times = JumuahPrayerTimeSerializer(many=True, read_only=True)
     eid_prayer_times = EidPrayerTimeSerializer(many=True, read_only=True)
+    today_prayer_times = serializers.SerializerMethodField()
+    jumuah_prayer_time_this_week = serializers.SerializerMethodField()
 
     class Meta:
         model = Masjid
@@ -81,7 +83,9 @@ class MasjidSerializer(serializers.ModelSerializer):
             'mousallis',
             'prayer_times',
             'jumuah_prayer_times',
-            'eid_prayer_times'
+            'eid_prayer_times',
+            'today_prayer_times',
+            'jumuah_prayer_time_this_week',
         ]
 
     def get_today_prayer_times(self, obj):
