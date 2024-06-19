@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_filters",
+    'storages',
     'corsheaders',
     "rest_framework",
     "drf_spectacular",
@@ -146,6 +147,21 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # USER
 AUTH_USER_MODEL = "user.User"
+
+S3_STORAGE_BACKEND = bool(int(os.environ.get("S3_STORAGE_BACKEND", 1)))
+if S3_STORAGE_BACKEND is True:
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_S3_URL_PROTOCOL = "https"
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_S3_USE_SSL = True
+    AWS_S3_VERIFY_SSL = True
+    AWS_ACCESS_KEY_ID = os.environ.get("R2_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("R2_SECRET_ACCESS_KEY")
+    AWS_S3_ENDPOINT_URL = os.environ.get("R2_ENDPOINT_URL")
+    AWS_STORAGE_BUCKET_NAME = os.environ.get("R2_STORAGE_BUCKET_NAME")
+    AWS_DEFAULT_ACL = None
+    # AWS_S3_REGION_NAME = os.environ.get("S3_STORAGE_BUCKET_REGION", "us-east-1")
+    # AWS_QUERYSTRING_AUTH = False
 
 # REST_FRAMEWORK
 REST_FRAMEWORK = {
