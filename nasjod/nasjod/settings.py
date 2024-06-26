@@ -28,6 +28,8 @@ SECRET_KEY = "django-insecure-(*z2g1vf73^#n0&2-2k58m6dcvb9_t8l1cyplfbm)@&+_pmx-8
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "localhost",
+    "app",
     "nasjod.com",
     ]
 
@@ -66,6 +68,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "http://front:3000",
     "http://localhost:3000",
 ]
 
