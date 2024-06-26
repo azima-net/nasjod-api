@@ -49,4 +49,4 @@ USER user
 VOLUME ["/vol/web"]
 
 # Set the entrypoint
-ENTRYPOINT ["/scripts/entrypoint.sh"]
+# ENTRYPOINT ["/scripts/entrypoint.sh"]
