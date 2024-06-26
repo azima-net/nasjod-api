@@ -265,9 +265,3 @@ SPECTACULAR_SETTINGS = {
     #     }
     # },
 }
-
-# Define the STATIC_ROOT
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Ensure you have STATIC_URL defined
-STATIC_URL = '/static/'
