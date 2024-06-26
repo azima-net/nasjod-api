@@ -19,8 +19,7 @@ RUN apk update \
     geos-dev \
     gdal-dev \
     binutils \
-    bash \
-    uwsgi-python
+    bash
 
 # Set work directory
 RUN mkdir /app
