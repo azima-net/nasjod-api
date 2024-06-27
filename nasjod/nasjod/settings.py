@@ -67,8 +67,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Allow all origins
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://front:3000",
+    "http://localhost:3000",
+    "http://nasjod.com:3000",
+]
 
 ROOT_URLCONF = "nasjod.urls"
 
