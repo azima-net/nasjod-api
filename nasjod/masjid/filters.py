@@ -3,6 +3,7 @@ from .models import Masjid
 
 class MasjidFilter(filters.FilterSet):
     # Assuming the address fields are on a related model you might need to use the related field lookup
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     street = filters.CharFilter(field_name='address__street', lookup_expr='icontains')
     city = filters.CharFilter(field_name='address__city', lookup_expr='icontains')
     state = filters.CharFilter(field_name='address__state', lookup_expr='icontains')

@@ -1,5 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.filters import OrderingFilter
+
 from django.conf import settings
 
 from .models import Masjid, PrayerTime, JumuahPrayerTime, EidPrayerTime
@@ -9,10 +11,11 @@ from core.permissions import IsManagerOfMasjid, IsAssistantOfMasjid, IsAdminOrMa
 
 
 class MasjidViewSet(viewsets.ModelViewSet):
-    queryset = Masjid.objects.all()
+    queryset = Masjid.objects.filter(is_active=True)
     serializer_class = MasjidSerializer
     filterset_class = MasjidFilter
     lookup_field = "uuid"
+    ordering_fields = ['name', 'created_at', 'updated_at'] 
     
     def get_permissions(self):
         if self.action in ('create', 'destroy'):
