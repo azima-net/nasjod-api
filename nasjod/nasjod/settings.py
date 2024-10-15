@@ -191,8 +191,8 @@ REST_FRAMEWORK = {
 
     # Throttling settings
     'DEFAULT_THROTTLE_CLASSES': (
-        'utils.InfiniteAnonRateThrottle',
-        'utils.InfiniteUserRateThrottle',
+        'nasjod.utils.InfiniteAnonRateThrottle',
+        'nasjod.utils.InfiniteUserRateThrottle',
     ),
     'DEFAULT_THROTTLE_RATES': {
         'anon': os.getenv('THROTTLE_ANON', 'infinite'),
