@@ -167,7 +167,23 @@ if S3_STORAGE_BACKEND is True:
     # AWS_S3_REGION_NAME = os.environ.get("S3_STORAGE_BUCKET_REGION", "us-east-1")
     # AWS_QUERYSTRING_AUTH = False
 
-# REST_FRAMEWORK
+# If throttling is disabled, set an empty tuple for throttle classes
+DEFAULT_THROTTLE_CLASSES = ()
+DEFAULT_THROTTLE_RATES = {}
+
+# Fetch the value from the environment variable, default is False (disabled)
+THROTTLE_ENABLED = os.getenv('THROTTLE_ENABLED', 'False') == 'True'
+if THROTTLE_ENABLED:
+    # If throttling is enabled, set the throttle classes and rates
+    DEFAULT_THROTTLE_CLASSES = (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    )
+    DEFAULT_THROTTLE_RATES = {
+        'anon': '100/day',
+        'user': '1000/day',
+    }
+
 REST_FRAMEWORK = {
     #SCHEMA_OPENAPI
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -190,14 +206,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 
     # Throttling settings
-    'DEFAULT_THROTTLE_CLASSES': (
-        'nasjod.utils.InfiniteAnonRateThrottle',
-        'nasjod.utils.InfiniteUserRateThrottle',
-    ),
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': os.getenv('THROTTLE_ANON', 'infinite'),
-        'user': os.getenv('THROTTLE_USER', 'infinite'),
-    },
+    'DEFAULT_THROTTLE_CLASSES': DEFAULT_THROTTLE_CLASSES,
+    'DEFAULT_THROTTLE_RATES': DEFAULT_THROTTLE_RATES,
 
     # Renderer settings
     'DEFAULT_RENDERER_CLASSES': (
