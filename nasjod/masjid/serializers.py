@@ -90,7 +90,7 @@ class MasjidSerializer(serializers.ModelSerializer):
 
     def get_today_prayer_times(self, obj):
         today = date.today()
-        prayer_times = PrayerTime.objects.filter(masjid=obj, date=today)
+        prayer_times = PrayerTime.objects.filter(masjids=obj, date=today)
         return PrayerTimeSerializer(prayer_times, many=True).data
 
     def get_jumuah_prayer_time_this_week(self, obj):

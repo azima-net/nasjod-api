@@ -48,6 +48,9 @@ class Masjid(ObjectBase):
     mousallis = models.ManyToManyField(User, related_name='favorite_masjids', blank=True)
     imams = models.ManyToManyField(User, related_name='led_masjids', blank=True)
 
+    # prayer times
+    prayer_times = models.ForeignKey('Masjid', null=True, blank=True, on_delete=models.SET_NULL)
+
     class Meta:
         verbose_name_plural = "Masajid"
 
@@ -78,8 +81,8 @@ def delete_associated_address(sender, instance, **kwargs):
     if instance.address:
         instance.address.delete()
 
+
 class BasePrayerTime(models.Model):
-    masjid = models.ForeignKey('Masjid', on_delete=models.CASCADE)
     date = models.DateField()
     hijri_date = models.CharField(max_length=50, editable=False, default="")
 
@@ -91,6 +94,16 @@ class BasePrayerTime(models.Model):
         self.hijri_date = str(Gregorian(self.date.year, self.date.month, self.date.day).to_hijri())
         super().save(*args, **kwargs)
 
+
+class IqamaTime():
+    masjid = models.ForeignKey('Masjid', on_delete=models.CASCADE)
+    fajr_iqama = models.IntegerField(null=True, blank=True,)
+    dhuhr_iqama = models.IntegerField(null=True, blank=True,)
+    asr_iqama = models.IntegerField(null=True, blank=True,)
+    maghrib_iqama = models.IntegerField(null=True, blank=True,)
+    isha_iqama = models.IntegerField(null=True, blank=True,)
+
+
 class PrayerTime(BasePrayerTime):
     fajr = models.TimeField()
     sunrise = models.TimeField()
@@ -99,22 +112,17 @@ class PrayerTime(BasePrayerTime):
     maghrib = models.TimeField()
     isha = models.TimeField()
 
-    fajr_iqama = models.IntegerField(null=True, blank=True,)  # Iqama time in minutes after Athan
-    dhuhr_iqama = models.IntegerField(null=True, blank=True,)
-    asr_iqama = models.IntegerField(null=True, blank=True,)
-    maghrib_iqama = models.IntegerField(null=True, blank=True,)
-    isha_iqama = models.IntegerField(null=True, blank=True,)
-
+    masjids = models.ManyToManyField('Masjid', blank=True)
+    place = models.CharField(max_length=255, null=True, blank=True)
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['masjid', 'date'], name='unique_prayer_time_per_day_per_masjid')
-        ]
         ordering = ['date']
 
     def __str__(self):
         return f"{self.masjid.name} - {self.date}"
 
+
 class JumuahPrayerTime(BasePrayerTime):
+    masjid = models.ForeignKey('Masjid', on_delete=models.CASCADE)
     jumuah_time = models.TimeField()
 
     class Meta:
@@ -129,7 +137,9 @@ class JumuahPrayerTime(BasePrayerTime):
     def __str__(self):
         return f"{self.masjid.name} - {self.date} - {self.jumuah_time}"
 
+
 class EidPrayerTime(BasePrayerTime):
+    masjid = models.ForeignKey('Masjid', on_delete=models.CASCADE)
     eid_time = models.TimeField()
 
     class Meta:
