@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "authentification",
     "user",
     "masjid",
+    "prayertime",
 ]
 
 MIDDLEWARE = [

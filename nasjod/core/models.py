@@ -7,12 +7,12 @@ from django.contrib.gis.db import models as geomodels
 class Address(models.Model):
     additional_info = models.CharField(max_length=255, blank=True, null=True)
     route_km_marker = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    zip_code = models.CharField(max_length=10)
+    street = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    zip_code = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=100)
-    coordinates = geomodels.PointField(unique=True)
+    coordinates = geomodels.PointField()
     
     def __str__(self):
         return f"{self.street}, {self.route_km_marker or ''}, {self.city}, {self.state}, {self.zip_code}, {self.country}"

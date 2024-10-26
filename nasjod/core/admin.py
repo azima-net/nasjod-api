@@ -1,14 +1,51 @@
 import csv
 
+from django import forms
 from django.contrib.gis import admin
 from django.http import HttpResponse
 
 from .models import Address
+from masjid.models import Masjid
+
+class AddressAdminForm(forms.ModelForm):
+    linked_masjid = forms.ModelChoiceField(
+        queryset=Masjid.objects.all(),
+        required=False,
+        label="Linked Masjid"
+    )
+
+    class Meta:
+        model = Address
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Pre-select the linked masjid if one exists
+        if self.instance and self.instance.pk:
+            self.fields['linked_masjid'].initial = Masjid.objects.filter(address=self.instance).first()
 
 class AddressAdmin(admin.GISModelAdmin):
-    # Setting the default map template
-    # map_template = 'gis/admin/custom_osm.html'
-    pass
+    form = AddressAdminForm
+    list_display = ('city', 'state', 'street', 'coordinates', 'linked_masjid', 'country')
+    search_fields = ('city', 'state', 'country')
+    actions = ['export_to_csv']
+
+    def save_model(self, request, obj, form, change):
+        # Save the address instance
+        super().save_model(request, obj, form, change)
+        # Get the selected masjid from the form
+        linked_masjid = form.cleaned_data.get('linked_masjid')
+        if linked_masjid:
+            linked_masjid.address = obj  # Link the masjid to this address
+            linked_masjid.save()
+        else:
+            # Unlink the address from any masjid if None is selected
+            Masjid.objects.filter(address=obj).update(address=None)
+
+    def linked_masjid(self, obj):
+        # Returns the linked Masjid's name if it exists
+        return obj.address_masjid.name if hasattr(obj, 'address_masjid') else "No linked Masjid"
+    linked_masjid.short_description = "Linked Masjid"
 
 admin.site.register(Address, AddressAdmin)
 

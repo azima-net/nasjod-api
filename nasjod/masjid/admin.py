@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.gis import admin as geoadmin
 from django.contrib.gis.forms import fields as gis_fields, widgets as gis_widgets
 from core.admin import export_to_csv
-from .models import Masjid, PrayerTime, JumuahPrayerTime, EidPrayerTime
+from .models import Masjid
 from core.models import Address
 
 
@@ -119,21 +119,3 @@ class MasjidAdmin(geoadmin.GISModelAdmin):
     form = MasjidAdminForm
 
 admin.site.register(Masjid, MasjidAdmin)
-
-@admin.register(PrayerTime)
-class PrayerTimeAdmin(admin.ModelAdmin):
-    list_display = ('date', 'hijri_date', 'fajr', 'dhuhr', 'asr', 'maghrib', 'isha')
-    list_filter = ('masjids', 'date')
-    # search_fields = ('masjid__name',)
-
-@admin.register(JumuahPrayerTime)
-class JumuahPrayerTimeAdmin(admin.ModelAdmin):
-    list_display = ('masjid', 'date', 'hijri_date', 'jumuah_time')
-    list_filter = ('masjid', 'date')
-    search_fields = ('masjid__name',)
-
-@admin.register(EidPrayerTime)
-class eidPrayerTimeAdmin(admin.ModelAdmin):
-    list_display = ('masjid', 'date', 'hijri_date', 'eid_time')
-    list_filter = ('masjid', 'date')
-    search_fields = ('masjid__name',)

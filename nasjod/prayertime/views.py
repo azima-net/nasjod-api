@@ -1,0 +1,49 @@
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
+from core.permissions import IsAdminOrManagerOrAssistant
+from .models import PrayerTime, JumuahPrayerTime, EidPrayerTime, IqamaTime
+from masjid.serializers import PrayerTimeSerializer
+from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeSerializer, JumuahPrayerTimeSerializer
+
+
+class PrayerTimeViewSet(viewsets.ModelViewSet):
+    serializer_class = PrayerTimeSerializer
+
+    def get_queryset(self):
+        return PrayerTime.objects.all()
+    
+    def get_permissions(self):
+        if self.action in ('create', 'destroy', 'update', 'partial_update'):
+            self.permission_classes = [IsAuthenticated, IsAdminOrManagerOrAssistant]
+        else:
+            self.permission_classes = []
+        return super().get_permissions()
+
+class JumuahPrayerTimeViewSet(viewsets.ModelViewSet):
+    queryset = JumuahPrayerTime.objects.all()
+    serializer_class = JumuahPrayerTimeSerializer
+
+    def get_permissions(self):
+        if self.action in ('create', 'destroy', 'update', 'partial_update'):
+            self.permission_classes = [IsAuthenticated, IsAdminOrManagerOrAssistant]
+        else:
+            self.permission_classes = []
+        return super().get_permissions()
+
+class EidPrayerTimeViewSet(viewsets.ModelViewSet):
+    queryset = EidPrayerTime.objects.all()
+    serializer_class = EidPrayerTimeSerializer
+
+    def get_permissions(self):
+        if self.action in ('create', 'destroy', 'update', 'partial_update'):
+            self.permission_classes = [IsAuthenticated, IsAdminOrManagerOrAssistant]
+        else:
+            self.permission_classes = []
+        return super().get_permissions()
+
+
+class IqamaTimeViewSet(viewsets.ModelViewSet):
+    queryset = IqamaTime.objects.all()
+    serializer_class = IqamaTimeSerializer
+    permission_classes = [IsAuthenticated]

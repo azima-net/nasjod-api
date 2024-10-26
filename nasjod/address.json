@@ -1,0 +1,254 @@
+[
+{
+    "model": "core.address",
+    "pk": 2,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "sidi elakhmi",
+        "city": "Sakiet Eddaier",
+        "state": "Sfax Governorate",
+        "zip_code": "3011",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.779819406420302 34.790534062426545)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 3,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.754821699999999 34.7345818)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 4,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7460356 34.74042119999999)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 5,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.720151099999999 34.72052580000001)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 6,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.711358699999998 34.73732709999999)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 7,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7121946 34.729296499999975)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 8,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.719624899999998 34.769775599999996)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 10,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7617307 34.7383482)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 11,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "جامع سيدي اللخمي, Nasseria, صفاقس‎",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7578904509347 34.73898481320018)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 12,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "37 Rue Sidi Ali Ennouri, Sfax",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7610914 34.7376296)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 13,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "37 Rue Sidi Ali Ennouri, Sfax",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7610407 34.73759299999999)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 15,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7609284 34.7371575)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 16,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7607069 34.736997999999986)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 18,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7587444 34.73680499999999)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 19,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.760403 34.7362521)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 20,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7611194 34.736177299999994)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 21,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "96 Rue Cheikh Tijani, Sfax",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.7588013 34.7361244)"
+    }
+},
+{
+    "model": "core.address",
+    "pk": 22,
+    "fields": {
+        "additional_info": null,
+        "route_km_marker": null,
+        "street": "$",
+        "city": "Sfax",
+        "state": "Sfax",
+        "zip_code": "$zip_code",
+        "country": "Tunisia",
+        "coordinates": "SRID=4326;POINT (10.760928700000001 34.73595949999999)"
+    }
+}
+]
