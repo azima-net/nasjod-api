@@ -1,12 +1,13 @@
 import phonenumbers
 from hijri_converter import Gregorian
 
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.models.signals import m2m_changed, post_delete
 from django.dispatch import receiver
 
+from prayertime.models import PrayerTime
 from core.models import Address, ObjectBase
 from core._helpers import image_path_upload
 
@@ -67,6 +68,16 @@ class Masjid(ObjectBase):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
+        
+        # Link PrayerTimes based on city if address is present and has a city
+        if self.address and self.address.city:
+            # Filter matching PrayerTime instances by city
+            matching_prayer_times = PrayerTime.objects.filter(location__city=self.address.city)
+            # Add the masjid to each matching PrayerTime without overwriting existing links
+            with transaction.atomic():
+                for prayer_time in matching_prayer_times:
+                    prayer_time.masjids.add(self)
+
 
 @receiver(m2m_changed, sender=Masjid.managers.through)
 @receiver(m2m_changed, sender=Masjid.assistants.through)

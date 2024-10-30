@@ -4,6 +4,8 @@ from django import forms
 from django.contrib.gis import admin
 from django.http import HttpResponse
 
+from prayertime.models import EidPrayerTime, PrayerTime
+
 from .models import Address
 from masjid.models import Masjid
 
@@ -26,7 +28,7 @@ class AddressAdminForm(forms.ModelForm):
 
 class AddressAdmin(admin.GISModelAdmin):
     form = AddressAdminForm
-    list_display = ('city', 'state', 'street', 'coordinates', 'linked_masjid', 'country')
+    list_display = ('city', 'state', 'street', 'coordinates', 'linked_masjid', 'linked_prayer_time', 'country')
     search_fields = ('city', 'state', 'country')
     actions = ['export_to_csv']
 
@@ -46,6 +48,13 @@ class AddressAdmin(admin.GISModelAdmin):
         # Returns the linked Masjid's name if it exists
         return obj.address_masjid.name if hasattr(obj, 'address_masjid') else "No linked Masjid"
     linked_masjid.short_description = "Linked Masjid"
+
+    def linked_prayer_time(self, obj):
+        # Check if there are any related PrayerTime or EidPrayerTime instances
+        if PrayerTime.objects.filter(location=obj).exists() or EidPrayerTime.objects.filter(location=obj).exists():
+            return "Prayer Time Linked"
+        return "No Linked Prayer Time"
+    linked_prayer_time.short_description = "Linked Prayer Time"
 
 admin.site.register(Address, AddressAdmin)
 

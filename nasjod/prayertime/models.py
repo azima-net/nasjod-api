@@ -3,7 +3,6 @@ from hijri_converter import Gregorian
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from masjid.models import Masjid
 from core.models import Address
 
 
@@ -21,7 +20,7 @@ class BasePrayerTime(models.Model):
 
 
 class IqamaTime(BasePrayerTime):
-    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE)
+    masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE)
     fajr_iqama = models.IntegerField(null=True, blank=True,)
     dhuhr_iqama = models.IntegerField(null=True, blank=True,)
     asr_iqama = models.IntegerField(null=True, blank=True,)
@@ -30,7 +29,7 @@ class IqamaTime(BasePrayerTime):
 
 
 class JumuahPrayerTime(BasePrayerTime):
-    masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE)
+    masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE)
     jumuah_time = models.TimeField()
 
     class Meta:
@@ -48,7 +47,7 @@ class JumuahPrayerTime(BasePrayerTime):
 
 class BaseLocatedPrayerTime(BasePrayerTime):
     location = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
-    masjids = models.ManyToManyField(Masjid, blank=True)
+    masjids = models.ManyToManyField('masjid.Masjid', blank=True)
 
     class Meta:
         abstract = True
