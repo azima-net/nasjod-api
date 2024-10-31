@@ -23,7 +23,7 @@ class MasjidSerializer(serializers.ModelSerializer):
     jumuah_prayer_times = JumuahPrayerTimeSerializer(many=True, read_only=True)
     eid_prayer_times = EidPrayerTimeSerializer(many=True, read_only=True)
     today_prayer_times = serializers.SerializerMethodField()
-    today_iqamas = serializers.SerializerMethodField()
+    iqamas = serializers.SerializerMethodField()
     jumuah_prayer_time_this_week = serializers.SerializerMethodField()
 
     class Meta:
@@ -53,7 +53,7 @@ class MasjidSerializer(serializers.ModelSerializer):
             'jumuah_prayer_times',
             'eid_prayer_times',
             'today_prayer_times',
-            'today_iqamas',
+            'iqamas',
             'jumuah_prayer_time_this_week',
         ]
 
@@ -62,9 +62,9 @@ class MasjidSerializer(serializers.ModelSerializer):
         prayer_times = PrayerTime.objects.filter(masjids=obj, date=today)
         return PrayerTimeMasjidSerializer(prayer_times, many=True).data
 
-    def get_today_iqamas(self, obj):
-        today = date.today()
-        iqama_times = IqamaTime.objects.filter(masjid=obj, date=today)
+    def get_iqamas(self, obj):
+        # today = date.today()
+        iqama_times = IqamaTime.objects.filter(masjid=obj)
         return IqamaTimeMasjidSerializer(iqama_times, many=True).data
 
     def get_jumuah_prayer_time_this_week(self, obj):
@@ -80,7 +80,6 @@ class MasjidSerializer(serializers.ModelSerializer):
         end_of_week = start_of_week + timedelta(days=6)  # End of the week (Sunday)
         eid_prayer_times = EidPrayerTime.objects.filter(masjid=obj, date__range=[start_of_week, end_of_week])
         return EidPrayerTimeSerializer(eid_prayer_times, many=True).data
-
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
