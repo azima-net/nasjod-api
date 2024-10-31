@@ -30,14 +30,27 @@ class IqamaTime(BasePrayerTime):
 
 class JumuahPrayerTime(BasePrayerTime):
     masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE)
-    jumuah_time = models.TimeField()
+    jumuah_time = models.TimeField(null=True, blank=True,)
+    first_timeslot_jumuah = models.BooleanField(default=False)
 
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['masjid', 'date', 'jumuah_time'], name='unique_jumuah_time_per_day_per_masjid')
         ]
+    
+    def get_jumuah_time(self):
+        """Returns the appropriate Jumuah time based on whether it's the first timeslot."""
+        if self.first_timeslot_jumuah:
+            # Get the corresponding Dhuhr prayer time for this date and masjid
+            dhuhr_prayer_time = PrayerTime.objects.filter(date=self.date, masjids=self.masjid).first()
+            if dhuhr_prayer_time:
+                return dhuhr_prayer_time.dhuhr
+            return None  # Return None if no Dhuhr time found
+        return self.jumuah_time
 
     def clean(self):
+        if not self.first_timeslot_jumuah and not self.jumuah_time:
+            raise ValidationError("Jumuah time must be specified since its not in first time slot")
         if self.date.weekday() != 4:  # 4 represents Friday
             raise ValidationError("Jumuah prayer time can only be set on a Friday.")
 

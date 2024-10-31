@@ -68,11 +68,23 @@ class MasjidSerializer(serializers.ModelSerializer):
         return IqamaTimeMasjidSerializer(iqama_times, many=True).data
 
     def get_jumuah_prayer_time_this_week(self, obj):
-        today = date.today()
-        friday = today + timedelta((4 - today.weekday()) % 7)  # Calculate the upcoming Friday
-        print(friday)
-        jumuah_prayer_times = JumuahPrayerTime.objects.filter(masjid=obj, date=friday)
-        return JumuahPrayerTimeMasjidSerializer(jumuah_prayer_times, many=True).data
+        # today = date.today()
+        # # Calculate the upcoming Friday
+        # friday = today + timedelta((4 - today.weekday()) % 7)
+
+        # Filter JumuahPrayerTime for this mosque and the calculated upcoming Friday
+        jumuah_prayer_times = JumuahPrayerTime.objects.filter(masjid=obj)
+
+        # Prepare the response data manually using the model method
+        response_data = []
+        for jumuah_prayer_time in jumuah_prayer_times:
+            response_data.append({
+                'date': jumuah_prayer_time.date,
+                'jumuah_time': jumuah_prayer_time.get_jumuah_time(),
+                'first_timeslot_jumuah': jumuah_prayer_time.first_timeslot_jumuah
+            })
+
+        return response_data
 
     def get_eid_prayer_time_this_week(self, obj):
         today = date.today()
