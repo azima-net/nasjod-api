@@ -1,6 +1,9 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline Nasjod
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
