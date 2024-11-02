@@ -9,7 +9,7 @@ from core.permissions import IsManagerOfMasjid
 
 
 class MasjidViewSet(viewsets.ModelViewSet):
-    queryset = Masjid.objects.filter(is_active=True)
+    queryset = Masjid.objects.filter()
     serializer_class = MasjidSerializer
     filterset_class = MasjidFilter
     lookup_field = "uuid"

@@ -31,6 +31,7 @@ class MasjidSerializer(serializers.ModelSerializer):
         fields = [
             'uuid',
             'name',
+            'is_active',
             'address',
             'telephone',
             'photo',
@@ -55,6 +56,9 @@ class MasjidSerializer(serializers.ModelSerializer):
             'today_prayer_times',
             'iqamas',
             'jumuah_prayer_time_this_week',
+        ]
+        read_only_fields = [
+            'is_active',
         ]
 
     def get_today_prayer_times(self, obj):
