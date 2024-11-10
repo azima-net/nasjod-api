@@ -183,6 +183,7 @@ if THROTTLE_ENABLED:
         'rest_framework.throttling.UserRateThrottle',
     )
     DEFAULT_THROTTLE_RATES = {
+        'user': '10000/day',
         'anon': '1000/day',
         'anon_create_masjid': '5/min',
     }

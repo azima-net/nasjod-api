@@ -7,8 +7,9 @@ on:
   pull_request:
     branches:
       - main
-  release:
-    types: [published]
+
+permissions:
+  contents: write
 
 jobs:
   # test-and-lint:
@@ -35,10 +36,67 @@ jobs:
 
   #     - name: Run pytest
   #       run: pytest
+  create-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history to get all tags
+          persist-credentials: false
+
+      - name: Install semver
+        run: pip install semver
+
+      - name: Configure Git user
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+
+      - name: Set up authentication for pushing tags
+        run: |
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
+
+      - name: Set version and create release
+        id: create_release
+        run: |
+          # Get the current version from the latest tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          CURRENT_VERSION=${LAST_TAG#v}  # Remove the 'v' prefix
+
+          echo "Current version: $CURRENT_VERSION"
+
+          # Determine versioning based on commit message patterns
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          if [[ "$COMMIT_MESSAGE" =~ feat! ]]; then
+            VERSION_TYPE=major
+          elif [[ "$COMMIT_MESSAGE" =~ feat ]]; then
+            VERSION_TYPE=minor
+          else
+            VERSION_TYPE=patch
+          fi
+
+          echo "Version bump type: $VERSION_TYPE"
+
+          # Increment the version number
+          NEW_VERSION=$(python3 -c "import semver; print(semver.VersionInfo.parse('$CURRENT_VERSION').bump_$VERSION_TYPE())")
+
+          echo "New version: $NEW_VERSION"
+
+          # Tag the new version
+          git tag -a "v$NEW_VERSION" -m "Release version v$NEW_VERSION"
+
+          # Push the new tag
+          git push origin "v$NEW_VERSION"
+
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
   build-and-push:
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
+    needs: create-release
+    if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - name: Checkout code
@@ -51,19 +109,17 @@ jobs:
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Build and push Docker image
-        id: docker_build
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/nasjod-api:latest
-          labels: |
-            version=${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
-    if: github.event_name == 'release' && github.event.action == 'published'
+    if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - name: Checkout code
@@ -75,18 +131,16 @@ jobs:
           echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      # - name: Login to GitHub Container Registry
-      #   run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Deploy to VPS
         env:
-          GHCR_PAT: ${{ secrets.GHCR_PAT }}
-          GH_USER: ${{ github.repository_owner }}
-          VPS_USER: ${{ secrets.VPS_SSH_USER }}
-          VPS_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          SSH_USER: ${{ secrets.VPS_SSH_USER }}
+          SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
         run: |
-          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST << EOF
-            echo "$GHCR_PAT" | docker login ghcr.io -u $GH_USER --password-stdin
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
             cd /opt/projects/nasjod
             docker-compose pull
             docker-compose up -d
