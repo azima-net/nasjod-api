@@ -172,6 +172,8 @@ if S3_STORAGE_BACKEND is True:
 DEFAULT_THROTTLE_CLASSES = ()
 DEFAULT_THROTTLE_RATES = {}
 
+
+
 # Fetch the value from the environment variable, default is False (disabled)
 THROTTLE_ENABLED = os.getenv('THROTTLE_ENABLED', 'False') == 'True'
 if THROTTLE_ENABLED:
@@ -181,8 +183,8 @@ if THROTTLE_ENABLED:
         'rest_framework.throttling.UserRateThrottle',
     )
     DEFAULT_THROTTLE_RATES = {
-        'anon': '100/day',
-        'user': '1000/day',
+        'anon': '1000/day',
+        'anon_create_masjid': '5/min',
     }
 
 REST_FRAMEWORK = {

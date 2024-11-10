@@ -15,10 +15,6 @@ User = get_user_model()
 
 
 class MasjidSerializer(serializers.ModelSerializer):
-    managers = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
-    assistants = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
-    mousallis = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
-    imams = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all(), required=False)
     address = AddressSerializer()
     jumuah_prayer_times = JumuahPrayerTimeSerializer(many=True, read_only=True)
     eid_prayer_times = EidPrayerTimeSerializer(many=True, read_only=True)
@@ -47,10 +43,6 @@ class MasjidSerializer(serializers.ModelSerializer):
             'salat_al_janaza',
             'iftar_ramadhan',
             'itikef',
-            'imams',
-            'managers',
-            'assistants',
-            'mousallis',
             'jumuah_prayer_times',
             'eid_prayer_times',
             'today_prayer_times',
@@ -67,8 +59,7 @@ class MasjidSerializer(serializers.ModelSerializer):
         return PrayerTimeMasjidSerializer(prayer_times, many=True).data
 
     def get_iqamas(self, obj):
-        # today = date.today()
-        iqama_times = IqamaTime.objects.filter(masjid=obj)
+        iqama_times = IqamaTime.objects.filter(masjid__uuid=obj.uuid)
         return IqamaTimeMasjidSerializer(iqama_times, many=True).data
 
     def get_jumuah_prayer_time_this_week(self, obj):
@@ -77,7 +68,7 @@ class MasjidSerializer(serializers.ModelSerializer):
         # friday = today + timedelta((4 - today.weekday()) % 7)
 
         # Filter JumuahPrayerTime for this mosque and the calculated upcoming Friday
-        jumuah_prayer_times = JumuahPrayerTime.objects.filter(masjid=obj)
+        jumuah_prayer_times = JumuahPrayerTime.objects.filter(masjid__uuid=obj.uuid)
 
         # Prepare the response data manually using the model method
         response_data = []
@@ -94,7 +85,7 @@ class MasjidSerializer(serializers.ModelSerializer):
         today = date.today()
         start_of_week = today - timedelta(days=today.weekday())  # Start of the week (Monday)
         end_of_week = start_of_week + timedelta(days=6)  # End of the week (Sunday)
-        eid_prayer_times = EidPrayerTime.objects.filter(masjid=obj, date__range=[start_of_week, end_of_week])
+        eid_prayer_times = EidPrayerTime.objects.filter(masjid__uuid=obj.uuid, date__range=[start_of_week, end_of_week])
         return EidPrayerTimeSerializer(eid_prayer_times, many=True).data
 
     def create(self, validated_data):
@@ -107,7 +98,7 @@ class MasjidSerializer(serializers.ModelSerializer):
             address = Address.objects.create(**address_data)
 
         # Now create the Masjid with the retrieved or newly created address
-        masjid = Masjid.objects.create(address=address, **validated_data)
+        masjid = Masjid.objects.create(address=address, is_active=False, **validated_data)
         return masjid
 
     def update(self, instance, validated_data):

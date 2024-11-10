@@ -15,7 +15,7 @@ class PrayerTimeViewSet(viewsets.ModelViewSet):
     
     def get_permissions(self):
         if self.action in ('create', 'destroy', 'update', 'partial_update'):
-            self.permission_classes = [IsAuthenticated, IsAdminOrManagerOrAssistant]
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
         else:
             self.permission_classes = []
         return super().get_permissions()
@@ -25,8 +25,10 @@ class JumuahPrayerTimeViewSet(viewsets.ModelViewSet):
     serializer_class = JumuahPrayerTimeSerializer
 
     def get_permissions(self):
-        if self.action in ('create', 'destroy', 'update', 'partial_update'):
-            self.permission_classes = [IsAuthenticated, IsAdminOrManagerOrAssistant]
+        if self.action in ('destroy',):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
+        elif self.action in ('update', 'partial_update'):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
         else:
             self.permission_classes = []
         return super().get_permissions()
@@ -36,8 +38,10 @@ class EidPrayerTimeViewSet(viewsets.ModelViewSet):
     serializer_class = EidPrayerTimeSerializer
 
     def get_permissions(self):
-        if self.action in ('create', 'destroy', 'update', 'partial_update'):
-            self.permission_classes = [IsAuthenticated, IsAdminOrManagerOrAssistant]
+        if self.action in ('destroy',):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
+        elif self.action in ('update', 'partial_update'):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
         else:
             self.permission_classes = []
         return super().get_permissions()
@@ -46,4 +50,12 @@ class EidPrayerTimeViewSet(viewsets.ModelViewSet):
 class IqamaTimeViewSet(viewsets.ModelViewSet):
     queryset = IqamaTime.objects.all()
     serializer_class = IqamaTimeSerializer
-    permission_classes = [IsAuthenticated]
+    
+    def get_permissions(self):
+        if self.action in ('destroy',):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
+        elif self.action in ('update', 'partial_update'):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
+        else:
+            self.permission_classes = []
+        return super().get_permissions()
