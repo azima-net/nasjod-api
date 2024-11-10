@@ -75,17 +75,19 @@ jobs:
           echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+      # - name: Login to GitHub Container Registry
+      #   run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Deploy to VPS
+        env:
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+          GH_USER: ${{ github.repository_owner }}
+          VPS_USER: ${{ secrets.VPS_SSH_USER }}
+          VPS_HOST: ${{ secrets.VPS_SSH_HOST }}
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST << EOF
+            echo "$GHCR_PAT" | docker login ghcr.io -u $GH_USER --password-stdin
             cd /opt/projects/nasjod
-            if ! docker-compose pull; then
-              echo "docker-compose pull failed, attempting individual docker pulls..."
-              docker pull ghcr.io/azima-net/nasjod-frontend:latest || { echo "Failed to pull nasjod-frontend"; exit 1; }
-              docker pull ghcr.io/azima-net/nasjod-api:latest || { echo "Failed to pull nasjod-api"; exit 1; }
-            fi
+            docker-compose pull
             docker-compose up -d
           EOF
