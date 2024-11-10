@@ -67,7 +67,7 @@ jobs:
         id: create_release
         run: |
           # Get the current version from the latest tag
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          LAST_TAG=$(git tag --sort=-v:refname | head -n 1 || echo "v0.0.0")
           CURRENT_VERSION=${LAST_TAG#v}  # Remove the 'v' prefix
 
           echo "Current version: $CURRENT_VERSION"
