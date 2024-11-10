@@ -82,6 +82,10 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }} << 'EOF'
             cd /opt/projects/nasjod
-            docker-compose pull
+            if ! docker-compose pull; then
+              echo "docker-compose pull failed, attempting individual docker pulls..."
+              docker pull ghcr.io/azima-net/nasjod-frontend:latest || { echo "Failed to pull nasjod-frontend"; exit 1; }
+              docker pull ghcr.io/azima-net/nasjod-api:latest || { echo "Failed to pull nasjod-api"; exit 1; }
+            fi
             docker-compose up -d
           EOF
