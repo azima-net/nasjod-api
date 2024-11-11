@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from django.db import IntegrityError
+from django.db import transaction
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -8,7 +8,7 @@ from .models import Masjid
 from core.models import Address
 from core.serializers import AddressSerializer
 from prayertime.models import EidPrayerTime, IqamaTime, JumuahPrayerTime, PrayerTime
-from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeMasjidSerializer, JumuahPrayerTimeMasjidSerializer, JumuahPrayerTimeSerializer, PrayerTimeMasjidSerializer, PrayerTimeSerializer
+from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeMasjidSerializer, JumuahPrayerTimeSerializer, PrayerTimeMasjidSerializer
 
 
 User = get_user_model()
@@ -99,6 +99,13 @@ class MasjidSerializer(serializers.ModelSerializer):
 
         # Now create the Masjid with the retrieved or newly created address
         masjid = Masjid.objects.create(address=address, is_active=False, **validated_data)
+        
+        # If the address has a city, update the prayer times based on city changes
+        if masjid.address and masjid.address.city:
+            # 2. Link the Masjid to PrayerTimes in the new city
+            matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=masjid.address.city)
+            with transaction.atomic():
+                self.prayertime_set.add(*matching_prayer_times)
         return masjid
 
     def update(self, instance, validated_data):
@@ -108,4 +115,21 @@ class MasjidSerializer(serializers.ModelSerializer):
             for attr, value in address_data.items():
                 setattr(address, attr, value)
             address.save()
+
+         # If the address has a city, update the prayer times based on city changes
+        if instance.address and instance.address.city:
+            # 1. Find mismatched PrayerTimes (old city)
+            mismatched_prayer_times = PrayerTime.objects.filter(
+                masjids=instance
+            ).exclude(location__city=instance.address.city)
+
+            # Bulk remove using `remove(*mismatched_prayer_times)`
+            if mismatched_prayer_times:
+                with transaction.atomic():
+                    self.prayertime_set.remove(*mismatched_prayer_times)
+
+            # 2. Link the Masjid to PrayerTimes in the new city
+            matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=instance.address.city)
+            with transaction.atomic():
+                instance.prayertime_set.add(*matching_prayer_times)
         return super().update(instance, validated_data)

@@ -3,8 +3,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from core.permissions import IsAdminOrManagerOrAssistant
 from .models import PrayerTime, JumuahPrayerTime, EidPrayerTime, IqamaTime
-from masjid.serializers import PrayerTimeSerializer
-from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeSerializer, JumuahPrayerTimeSerializer
+from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeSerializer, JumuahPrayerTimeSerializer, PrayerTimeSerializer
 
 
 class PrayerTimeViewSet(viewsets.ModelViewSet):
