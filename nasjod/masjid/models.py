@@ -70,23 +70,6 @@ class Masjid(ObjectBase):
         self.clean()
         super().save(*args, **kwargs)
 
-        # # If the address has a city, update the prayer times based on city changes
-        # if self.address and self.address.city:
-        #     # 1. Find mismatched PrayerTimes (old city)
-        #     mismatched_prayer_times = PrayerTime.objects.filter(
-        #         masjids=self
-        #     ).exclude(location__city=self.address.city)
-
-        #     # Bulk remove using `remove(*mismatched_prayer_times)`
-        #     if mismatched_prayer_times:
-        #         with transaction.atomic():
-        #             self.prayertime_set.remove(*mismatched_prayer_times)
-
-        #     # 2. Link the Masjid to PrayerTimes in the new city
-        #     matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=self.address.city)
-        #     with transaction.atomic():
-        #         self.prayertime_set.add(*matching_prayer_times)
-
 
 @receiver(m2m_changed, sender=Masjid.managers.through)
 @receiver(m2m_changed, sender=Masjid.assistants.through)
@@ -102,3 +85,7 @@ def validate_unique_roles(sender, instance, action, reverse, model, pk_set, **kw
 def delete_associated_address(sender, instance, **kwargs):
     if instance.address:
         instance.address.delete()
+
+
+class SuggestionMasjidModification(ObjectBase):
+    pass
