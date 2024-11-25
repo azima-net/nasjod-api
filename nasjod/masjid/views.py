@@ -1,7 +1,8 @@
-from core.throttling import CreateMasjidAnonThrottle
-from rest_framework import viewsets, status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.response import Response
+
+from core.throttling import CreateMasjidAnonThrottle
 
 import logging
 
@@ -40,15 +41,6 @@ class SuggestionMasjidModificationViewSet(viewsets.ModelViewSet):
     """
     queryset = SuggestionMasjidModification.objects.all()
     serializer_class = SuggestionMasjidModificationSerializer
-
-    def create(self, request, *args, **kwargs):
-        # Log the request data
-        print("Request Data: %s", request.data)
-
-        # Proceed with the usual create logic
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name', 'suggestion_masjid__uuid']
+    lookup_field = "uuid"
