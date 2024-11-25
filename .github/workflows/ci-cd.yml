@@ -151,6 +151,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
             cd /opt/projects/nasjod
-            docker-compose pull
-            docker-compose up -d
+            docker-compose pull app front
+            docker-compose up -d app front
           EOF
