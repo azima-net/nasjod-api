@@ -108,3 +108,10 @@ class User(AbstractBaseUser, PermissionsMixin, GDPR_compliance):
 
     def __str__(self) -> str:
         return self.email
+
+class UserContributor(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(max_length=255, blank=True, null=True)
+    masjids = models.CharField(max_length=50, blank=True, null=True)
+    contribution_date = models.DateTimeField(auto_now_add=True, null=True)
+    accept_to_display = models.BooleanField(default=False)

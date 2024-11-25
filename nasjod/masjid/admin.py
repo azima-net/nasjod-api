@@ -3,7 +3,7 @@ from django.db import models, transaction
 from django.contrib import admin
 from django.contrib.gis import admin as geoadmin
 from core.admin import export_to_csv
-from .models import Masjid
+from .models import Masjid, SuggestionMasjidModification
 from prayertime.models import PrayerTime
 
 
@@ -109,3 +109,17 @@ class MasjidAdmin(geoadmin.GISModelAdmin):
     actions = [export_to_csv]
 
 admin.site.register(Masjid, MasjidAdmin)
+
+@admin.register(SuggestionMasjidModification)
+class SuggestionMasjidModificationAdmin(admin.ModelAdmin):
+    list_display = (
+        'name', 'size', 'telephone', 'is_active', 'parking', 'disabled_access',
+        'ablution_room', 'woman_space', 'adult_courses', 'children_courses',
+        'salat_al_eid', 'salat_al_janaza', 'iftar_ramadhan', 'itikef',
+        'fajr_iqama', 'dhuhr_iqama', 'asr_iqama', 'maghrib_iqama', 'isha_iqama',
+        'jumuah_time', 'first_timeslot_jumuah', 'eid_time', 'created_at', 'updated_at'
+    )
+    list_filter = ('is_active', 'size', 'parking', 'disabled_access', 'woman_space')
+    search_fields = ('name', 'telephone', 'message')
+    ordering = ('-created_at',)
+    readonly_fields = ('uuid', 'created_at', 'updated_at')

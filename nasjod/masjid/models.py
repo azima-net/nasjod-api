@@ -88,4 +88,58 @@ def delete_associated_address(sender, instance, **kwargs):
 
 
 class SuggestionMasjidModification(ObjectBase):
-    pass
+    SIZE_CHOICES = (
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+    )
+
+    name = models.CharField(max_length=255, default="")
+    suggestion_masjid = models.ForeignKey(Masjid, on_delete=models.CASCADE, related_name="suggestions", null=True)
+    address = models.OneToOneField(Address, related_name='address_suggestion_masjid_modification',
+                                   on_delete=models.SET_NULL, null=True, blank=True)
+    telephone = models.CharField(max_length=20, null=True, blank=True)
+    photo = models.ImageField(null=True, blank=True, upload_to=image_path_upload)
+    cover = models.ImageField(null=True, blank=True, upload_to=image_path_upload)
+    size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='M')
+    message = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text="Optional message to provide additional information about the masjid modification suggestion."
+    )
+
+    # Boolean fields
+    is_active = models.BooleanField(default=True)
+    parking = models.BooleanField(default=False)
+    disabled_access = models.BooleanField(default=False)
+    ablution_room = models.BooleanField(default=False)
+    woman_space = models.BooleanField(default=False)
+    adult_courses = models.BooleanField(default=False)
+    children_courses = models.BooleanField(default=False)
+    salat_al_eid = models.BooleanField(default=False)
+    salat_al_janaza = models.BooleanField(default=False)
+    iftar_ramadhan = models.BooleanField(default=False)
+    itikef = models.BooleanField(default=False)
+
+    # iqama
+
+    fajr_iqama = models.IntegerField(null=True, blank=True,)
+    dhuhr_iqama = models.IntegerField(null=True, blank=True,)
+    asr_iqama = models.IntegerField(null=True, blank=True,)
+    maghrib_iqama = models.IntegerField(null=True, blank=True,)
+    isha_iqama = models.IntegerField(null=True, blank=True,)
+
+    # Jumuah
+    jumuah_time = models.TimeField(null=True, blank=True,)
+    first_timeslot_jumuah = models.BooleanField(default=False)
+
+    # Eid prayer time
+    eid_time = models.TimeField(null=True, blank=True,)
+
+
+    class Meta:
+        verbose_name_plural = "SuggestionMasjidModifications"
+
+    def __str__(self):
+        return self.name

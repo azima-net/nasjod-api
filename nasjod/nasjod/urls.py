@@ -18,13 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+from user.views import UserContributorViewset
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/auth/", include("authentification.urls")),
-    path("api/masajid/", include("masjid.urls")),
+    path("api/", include("masjid.urls")),
     path("api/", include("prayertime.urls")),
     path("api/users/", include("user.urls")),
+    path('api/contributors/', UserContributorViewset.as_view({'get': 'list', 'post': 'create'}), name='user-contributors'),  # Explicitly adds contributors endpoint
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),

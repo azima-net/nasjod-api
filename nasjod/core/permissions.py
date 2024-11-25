@@ -1,5 +1,7 @@
 from django.conf import settings
 from rest_framework.permissions import BasePermission
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import AuthenticationFailed
 
 from masjid.models import Masjid
 
@@ -97,3 +99,17 @@ class IsMousalliOfMasjid(BasePermission):
             return request.user in masjid.mousallis.all()
         except Masjid.DoesNotExist:
             return False
+
+class FrontendAppPermission(BasePermission):
+    """
+    Custom permission to check if the request is authenticated using an app token.
+    """
+
+    def has_permission(self, request, view):
+        # Check if the request was authenticated by AppTokenAuthentication
+        if not request.auth:
+            return False
+
+        # Validate the app claim in the token
+        app_name = request.auth.get("app")
+        return app_name == "frontend"

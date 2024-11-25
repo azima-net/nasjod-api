@@ -4,7 +4,7 @@ from django.db import transaction
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Masjid
+from .models import Masjid, SuggestionMasjidModification
 from core.models import Address
 from core.serializers import AddressSerializer
 from prayertime.models import EidPrayerTime, IqamaTime, JumuahPrayerTime, PrayerTime
@@ -104,8 +104,10 @@ class MasjidSerializer(serializers.ModelSerializer):
         if masjid.address and masjid.address.city:
             # 2. Link the Masjid to PrayerTimes in the new city
             matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=masjid.address.city)
+            print(matching_prayer_times)
             with transaction.atomic():
-                self.prayertime_set.add(*matching_prayer_times)
+                masjid.prayertime_set.add(*matching_prayer_times)
+                print(masjid.prayertime_set)
         return masjid
 
     def update(self, instance, validated_data):
@@ -126,10 +128,57 @@ class MasjidSerializer(serializers.ModelSerializer):
             # Bulk remove using `remove(*mismatched_prayer_times)`
             if mismatched_prayer_times:
                 with transaction.atomic():
-                    self.prayertime_set.remove(*mismatched_prayer_times)
+                    instance.prayertime_set.remove(*mismatched_prayer_times)
 
             # 2. Link the Masjid to PrayerTimes in the new city
             matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=instance.address.city)
             with transaction.atomic():
                 instance.prayertime_set.add(*matching_prayer_times)
+        return super().update(instance, validated_data)
+
+
+class SuggestionMasjidModificationSerializer(serializers.ModelSerializer):
+    suggestion_masjid = serializers.SlugRelatedField(
+        queryset=Masjid.objects.all(),
+        slug_field='uuid'  # Use 'uuid' for lookups instead of the primary key
+    )
+    address = AddressSerializer()  # Nested serializer for Address
+
+    class Meta:
+        model = SuggestionMasjidModification
+        fields = [
+            # Base fields from ObjectBase
+            'uuid', 'created_at', 'updated_at',
+            # Fields from SuggestionMasjidModification
+            'id', 'name', 'suggestion_masjid', 'address', 'telephone', 'photo', 'cover', 
+            'size', 'message', 'is_active', 'parking', 'disabled_access', 'ablution_room', 
+            'woman_space', 'adult_courses', 'children_courses', 'salat_al_eid', 
+            'salat_al_janaza', 'iftar_ramadhan', 'itikef', 'fajr_iqama', 'dhuhr_iqama', 
+            'asr_iqama', 'maghrib_iqama', 'isha_iqama', 'jumuah_time', 'first_timeslot_jumuah', 
+            'eid_time'
+        ]
+        read_only_fields = ['uuid', 'created_at', 'updated_at']
+
+    def create(self, validated_data):
+        # Handle the address
+        print("validated_data")
+        print(validated_data)
+        address_data = validated_data.pop('address', None)
+        if address_data:
+            address = Address.objects.create(**address_data)
+            validated_data['address'] = address
+
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        # Handle address updates
+        address_data = validated_data.pop('address', None)
+        if address_data:
+            if instance.address:
+                for key, value in address_data.items():
+                    setattr(instance.address, key, value)
+                instance.address.save()
+            else:
+                instance.address = Address.objects.create(**address_data)
+
         return super().update(instance, validated_data)

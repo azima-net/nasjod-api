@@ -2,8 +2,10 @@ from django.shortcuts import render
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from .models import User
-from .serializers import UserSerializer
+from .models import User, UserContributor
+from .serializers import UserContributorSerializer, UserSerializer
+from authentification.authentication import AppTokenAuthentication
+from core.permissions import FrontendAppPermission
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -19,3 +21,14 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             self.permission_classes = []
         return super().get_permissions()
+
+
+class UserContributorViewset(viewsets.ModelViewSet):
+    queryset = UserContributor.objects.all()
+    serializer_class = UserContributorSerializer
+    authentication_classes = [AppTokenAuthentication]
+    permission_classes = [FrontendAppPermission]
+
+    def get_queryset(self):
+        # Filter the queryset to include only instances where `accept_to_display` is True
+        return super().get_queryset().filter(accept_to_display=True)
