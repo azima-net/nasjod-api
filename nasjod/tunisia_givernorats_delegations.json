@@ -1,0 +1,1700 @@
+{
+    "Ariana": {
+        "id_meteo_tunisia": 358,
+        "intituleAr": "أريانة",
+        "delegations": [
+            {
+                "id": 631,
+                "intituleFr": "Ariana",
+                "intituleAr": "اريانة",
+                "intituleAn": "Ariana"
+            },
+            {
+                "id": 534,
+                "intituleFr": "Attadhamon",
+                "intituleAr": "التظامن",
+                "intituleAn": "Attadhamon"
+            },
+            {
+                "id": 530,
+                "intituleFr": "Kalaat El Andalous",
+                "intituleAr": "قلعة الأندلس",
+                "intituleAn": "Kalaat El Andalous"
+            },
+            {
+                "id": 533,
+                "intituleFr": "Mnihla",
+                "intituleAr": "المنيهلة",
+                "intituleAn": "Mnihla"
+            },
+            {
+                "id": 531,
+                "intituleFr": "Raoued",
+                "intituleAr": "رواد",
+                "intituleAn": "Raoued"
+            },
+            {
+                "id": 535,
+                "intituleFr": "Sidi Thabet",
+                "intituleAr": "سيدي ثابت",
+                "intituleAn": "Sidi Thabet"
+            },
+            {
+                "id": 532,
+                "intituleFr": "Soukra",
+                "intituleAr": "سكرة",
+                "intituleAn": "Soukra"
+            }
+        ]
+    },
+    "Beja": {
+        "id_meteo_tunisia": 356,
+        "intituleAr": "باجة",
+        "delegations":[
+        {
+            "id": 515,
+            "intituleFr": "Amdoun",
+            "intituleAr": "عمدون",
+            "intituleAn": "Amdoun"
+        },
+        {
+            "id": 629,
+            "intituleFr": "Beja",
+            "intituleAr": "باجة",
+            "intituleAn": "Beja"
+        },
+        {
+            "id": 519,
+            "intituleFr": "Goubellat",
+            "intituleAr": "قبلاط",
+            "intituleAn": "Goubellat"
+        },
+        {
+            "id": 520,
+            "intituleFr": "Mejez El Bab",
+            "intituleAr": "مجاز الباب",
+            "intituleAn": "Mejez El Bab"
+        },
+        {
+            "id": 514,
+            "intituleFr": "Nefza",
+            "intituleAr": "نفزة",
+            "intituleAn": "Nefza"
+        },
+        {
+            "id": 518,
+            "intituleFr": "Teboursouk",
+            "intituleAr": "تبرسق",
+            "intituleAn": "Teboursouk"
+        },
+        {
+            "id": 517,
+            "intituleFr": "Testour",
+            "intituleAr": "تستور",
+            "intituleAn": "Testour"
+        },
+        {
+            "id": 516,
+            "intituleFr": "Tibar",
+            "intituleAr": "تيبار",
+            "intituleAn": "Tibar"
+        }
+    ]
+    },
+    "Ben Arous": {
+        "id_meteo_tunisia": 349,
+        "intituleAr": "بن عروس",
+        "delegations": [
+            {
+                "id": 622,
+                "intituleFr": "Ben Arous",
+                "intituleAr": "بن عروس",
+                "intituleAn": "Ben Arous"
+            },
+            {
+                "id": 453,
+                "intituleFr": "Boumhel Bassatine",
+                "intituleAr": "بومهل البساتين",
+                "intituleAn": "Boumhel Bassatine"
+            },
+            {
+                "id": 447,
+                "intituleFr": "El Mourouj",
+                "intituleAr": "المروج",
+                "intituleAn": "El Mourouj"
+            },
+            {
+                "id": 450,
+                "intituleFr": "Ezzahra",
+                "intituleAr": "الزهرة",
+                "intituleAn": "Ezzahra"
+            },
+            {
+                "id": 446,
+                "intituleFr": "Fouchana",
+                "intituleAr": "فوشانة",
+                "intituleAn": "Fouchana"
+            },
+            {
+                "id": 452,
+                "intituleFr": "Hammam Chatt",
+                "intituleAr": "حمام الشط",
+                "intituleAn": "Hammam Chatt"
+            },
+            {
+                "id": 451,
+                "intituleFr": "Hammam Lif",
+                "intituleAr": "حمام الأنف",
+                "intituleAn": "Hammam Lif"
+            },
+            {
+                "id": 454,
+                "intituleFr": "Medina Jedida",
+                "intituleAr": "المدينة الجديدة",
+                "intituleAn": "Medina Jedida"
+            },
+            {
+                "id": 448,
+                "intituleFr": "Megrine",
+                "intituleAr": "مقرين",
+                "intituleAn": "Megrine"
+            },
+            {
+                "id": 445,
+                "intituleFr": "Mohamedia",
+                "intituleAr": "المحمدية",
+                "intituleAn": "Mohamedia"
+            },
+            {
+                "id": 444,
+                "intituleFr": "Mornag",
+                "intituleAr": "مرناق",
+                "intituleAn": "Mornag"
+            },
+            {
+                "id": 449,
+                "intituleFr": "Rades",
+                "intituleAr": "رادس",
+                "intituleAn": "Rades"
+            }
+        ]
+    },
+    "Bizerte": {
+        "id_meteo_tunisia": 361,
+        "intituleAr": "بنزرت",
+        "delegations": [
+            {
+                "id": 572,
+                "intituleFr": "Al Khitmin",
+                "intituleAr": "الختمين",
+                "intituleAn": "Al Khitmin"
+            },
+            {
+                "id": 569,
+                "intituleFr": "Al Matlin",
+                "intituleAr": "المتلين",
+                "intituleAn": "Al Matlin"
+            },
+            {
+                "id": 571,
+                "intituleFr": "Aousja",
+                "intituleAr": "عوسجة",
+                "intituleAn": "Aousja"
+            },
+            {
+                "id": 634,
+                "intituleFr": "Bizerte",
+                "intituleAr": "بنزرت",
+                "intituleAn": "Bizerte"
+            },
+            {
+                "id": 566,
+                "intituleFr": "El Alia",
+                "intituleAr": "العالية",
+                "intituleAn": "El Alia"
+            },
+            {
+                "id": 563,
+                "intituleFr": "Ghar El Melh",
+                "intituleAr": "غار الملح",
+                "intituleAn": "Ghar El Melh"
+            },
+            {
+                "id": 560,
+                "intituleFr": "Ghezala",
+                "intituleAr": "غزالة",
+                "intituleAn": "Ghezala"
+            },
+            {
+                "id": 558,
+                "intituleFr": "Joumine",
+                "intituleAr": "جومين",
+                "intituleAn": "Joumine"
+            },
+            {
+                "id": 559,
+                "intituleFr": "Mateur",
+                "intituleAr": "ماطر",
+                "intituleAn": "Mateur"
+            },
+            {
+                "id": 562,
+                "intituleFr": "Menzel Bourguiba",
+                "intituleAr": "منزل برقيبة",
+                "intituleAn": "Menzel Bourguiba"
+            },
+            {
+                "id": 561,
+                "intituleFr": "Menzel Jemil",
+                "intituleAr": "منزل جميل",
+                "intituleAn": "Menzel Jemil"
+            },
+            {
+                "id": 564,
+                "intituleFr": "Ras Jebel",
+                "intituleAr": "رأس الجبل",
+                "intituleAn": "Ras Jebel"
+            },
+            {
+                "id": 557,
+                "intituleFr": "Sejnane",
+                "intituleAr": "سجنان",
+                "intituleAn": "Sejnane"
+            },
+            {
+                "id": 565,
+                "intituleFr": "Tinja",
+                "intituleAr": "تينجة",
+                "intituleAn": "Tinja"
+            },
+            {
+                "id": 567,
+                "intituleFr": "Utique",
+                "intituleAr": "أوتيك",
+                "intituleAn": "Utique"
+            },
+            {
+                "id": 568,
+                "intituleFr": "Zarzouna",
+                "intituleAr": "جرزونة",
+                "intituleAn": "Zarzouna"
+            },
+            {
+                "id": 570,
+                "intituleFr": "Zouaouine",
+                "intituleAr": "الزواوين",
+                "intituleAn": "Zouaouine"
+            }
+        ]
+    },
+    "Gabes": {
+        "id_meteo_tunisia": 347,
+        "intituleAr": "قابس",
+        "delegations": [
+            {
+                "id": 1024,
+                "intituleFr": "El Hamma",
+                "intituleAr": "الحامة",
+                "intituleAn": "El Hamma"
+            },
+            {
+                "id": 620,
+                "intituleFr": "Gabes",
+                "intituleAr": "قابس",
+                "intituleAn": "Gabes"
+            },
+            {
+                "id": 1019,
+                "intituleFr": "Ghannouch",
+                "intituleAr": "غنوش",
+                "intituleAn": "Ghannouch"
+            },
+            {
+                "id": 1020,
+                "intituleFr": "Mareth",
+                "intituleAr": "مارث",
+                "intituleAn": "Mareth"
+            },
+            {
+                "id": 1022,
+                "intituleFr": "Matmata",
+                "intituleAr": "مطماطا",
+                "intituleAn": "Matmata"
+            },
+            {
+                "id": 1023,
+                "intituleFr": "Matmata Nouvelle",
+                "intituleAr": "مطماطا الجديدة",
+                "intituleAn": "Matmata Nouvelle"
+            },
+            {
+                "id": 1021,
+                "intituleFr": "Menzel Habib",
+                "intituleAr": "منزل حبيب",
+                "intituleAn": "Menzel Habib"
+            },
+            {
+                "id": 1025,
+                "intituleFr": "Metouia",
+                "intituleAr": "المطوية",
+                "intituleAn": "Metouia"
+            }
+        ]
+    },
+    "Gafsa": {
+        "id_meteo_tunisia": 365,
+        "intituleAr": "قفصة",
+        "delegations": [
+            {
+                "id": 612,
+                "intituleFr": "Belkhir",
+                "intituleAr": "بلخير",
+                "intituleAn": "Belkhir"
+            },
+            {
+                "id": 611,
+                "intituleFr": "El Guettar",
+                "intituleAr": "القطار",
+                "intituleAn": "El Guettar"
+            },
+            {
+                "id": 608,
+                "intituleFr": "El Ksar",
+                "intituleAr": "القصر",
+                "intituleAn": "El Ksar"
+            },
+            {
+                "id": 638,
+                "intituleFr": "Gafsa",
+                "intituleAr": "قفصة",
+                "intituleAn": "Gafsa"
+            },
+            {
+                "id": 607,
+                "intituleFr": "Mdhilla",
+                "intituleAr": "المظيلة",
+                "intituleAn": "Mdhilla"
+            },
+            {
+                "id": 606,
+                "intituleFr": "Metlaoui",
+                "intituleAr": "المتلوي",
+                "intituleAn": "Metlaoui"
+            },
+            {
+                "id": 604,
+                "intituleFr": "Moulares",
+                "intituleAr": "أم العرايس",
+                "intituleAn": "Moulares"
+            },
+            {
+                "id": 605,
+                "intituleFr": "Redyef",
+                "intituleAr": "الرديف",
+                "intituleAn": "Redyef"
+            },
+            {
+                "id": 609,
+                "intituleFr": "Sened",
+                "intituleAr": "السند",
+                "intituleAn": "Sened"
+            },
+            {
+                "id": 610,
+                "intituleFr": "Sidi Aich",
+                "intituleAr": "سيدي عيش",
+                "intituleAn": "Sidi Aich"
+            }
+        ]
+    },
+    "Jendouba": {
+        "id_meteo_tunisia": 354,
+        "intituleAr": "جندوبة",
+        "delegations": [
+            {
+                "id": 498,
+                "intituleFr": "Ain Drahem",
+                "intituleAr": "عين دراهم",
+                "intituleAn": "Ain Drahem"
+            },
+            {
+                "id": 503,
+                "intituleFr": "Balta Bou Aouane",
+                "intituleAr": "بلطة بوعوان",
+                "intituleAn": "Balta Bou Aouane"
+            },
+            {
+                "id": 499,
+                "intituleFr": "Bou Salem",
+                "intituleAr": "بوسالم",
+                "intituleAn": "Bou Salem"
+            },
+            {
+                "id": 502,
+                "intituleFr": "Fernana",
+                "intituleAr": "فرنانة",
+                "intituleAn": "Fernana"
+            },
+            {
+                "id": 501,
+                "intituleFr": "Ghardimaou",
+                "intituleAr": "غار الدماء",
+                "intituleAn": "Ghardimaou"
+            },
+            {
+                "id": 627,
+                "intituleFr": "Jendouba",
+                "intituleAr": "جندوبة",
+                "intituleAn": "Jendouba"
+            },
+            {
+                "id": 500,
+                "intituleFr": "Oued Mliz",
+                "intituleAr": "واد مليز",
+                "intituleAn": "Oued Mliz"
+            },
+            {
+                "id": 497,
+                "intituleFr": "Tabarka",
+                "intituleAr": "طبرقة",
+                "intituleAn": "Tabarka"
+            }
+        ]
+    },
+    "Kairouan": {
+        "id_meteo_tunisia": 357,
+        "intituleAr": "القيروان",
+        "delegations": [
+            {
+                "id": 528,
+                "intituleFr": "Bou Hajla",
+                "intituleAr": "بوحجلة",
+                "intituleAn": "Bou Hajla"
+            },
+            {
+                "id": 522,
+                "intituleFr": "Chebika",
+                "intituleAr": "الشبيكة",
+                "intituleAn": "Chebika"
+            },
+            {
+                "id": 529,
+                "intituleFr": "Chrarda",
+                "intituleAr": "الشراردة",
+                "intituleAn": "Chrarda"
+            },
+            {
+                "id": 524,
+                "intituleFr": "El Alaa",
+                "intituleAr": "العلاء",
+                "intituleAn": "El Alaa"
+            },
+            {
+                "id": 523,
+                "intituleFr": "Haffouz",
+                "intituleAr": "حفوز",
+                "intituleAn": "Haffouz"
+            },
+            {
+                "id": 526,
+                "intituleFr": "Hajeb El Ayoun",
+                "intituleAr": "حاجب العيون",
+                "intituleAn": "Hajeb El Ayoun"
+            },
+            {
+                "id": 630,
+                "intituleFr": "Kairouan",
+                "intituleAr": "القيروان",
+                "intituleAn": "Kairouan"
+            },
+            {
+                "id": 527,
+                "intituleFr": "Nasrallah",
+                "intituleAr": "نصرالله",
+                "intituleAn": "Nasrallah"
+            },
+            {
+                "id": 525,
+                "intituleFr": "Oueslatia",
+                "intituleAr": "الوسلاتية",
+                "intituleAn": "Oueslatia"
+            },
+            {
+                "id": 521,
+                "intituleFr": "Sebikha",
+                "intituleAr": "السبيخة",
+                "intituleAn": "Sebikha"
+            }
+        ]
+    },
+    "Kasserine": {
+        "id_meteo_tunisia": 362,
+        "intituleAr": "القصرين",
+        "delegations": [
+            {
+                "id": 579,
+                "intituleFr": "El Ayoun",
+                "intituleAr": "العيون",
+                "intituleAn": "El Ayoun"
+            },
+            {
+                "id": 577,
+                "intituleFr": "Feriana",
+                "intituleAr": "فريانة",
+                "intituleAn": "Feriana"
+            },
+            {
+                "id": 578,
+                "intituleFr": "Foussana",
+                "intituleAr": "فوسانة",
+                "intituleAn": "Foussana"
+            },
+            {
+                "id": 582,
+                "intituleFr": "Hassi Ferid",
+                "intituleAr": "حاسي الفريد",
+                "intituleAn": "Hassi Ferid"
+            },
+            {
+                "id": 574,
+                "intituleFr": "Hidra",
+                "intituleAr": "حيدرة",
+                "intituleAn": "Hidra"
+            },
+            {
+                "id": 581,
+                "intituleFr": "Jedliane",
+                "intituleAr": "جدليان",
+                "intituleAn": "Jedliane"
+            },
+            {
+                "id": 635,
+                "intituleFr": "Kasserine",
+                "intituleAr": "القصرين",
+                "intituleAn": "Kasserine"
+            },
+            {
+                "id": 580,
+                "intituleFr": "Majel Bel Abbes",
+                "intituleAr": "ماجل بلعباس",
+                "intituleAn": "Majel Bel Abbes"
+            },
+            {
+                "id": 576,
+                "intituleFr": "Sbiba",
+                "intituleAr": "سبيبة",
+                "intituleAn": "Sbiba"
+            },
+            {
+                "id": 575,
+                "intituleFr": "Sbitla",
+                "intituleAr": "سبيطلة",
+                "intituleAn": "Sbitla"
+            },
+            {
+                "id": 573,
+                "intituleFr": "Tala",
+                "intituleAr": "تالة",
+                "intituleAn": "Tala"
+            }
+        ]
+    },
+    "Kebili": {
+        "id_meteo_tunisia": 1012,
+        "intituleAr": "قبلي",
+        "delegations":[
+        {
+            "id": 484,
+            "intituleFr": "Douz",
+            "intituleAr": "دوز",
+            "intituleAn": "Douz"
+        },
+        {
+            "id": 485,
+            "intituleFr": "El Faouar",
+            "intituleAr": "الفوار",
+            "intituleAn": "El Faouar"
+        },
+        {
+            "id": 482,
+            "intituleFr": "Kebili",
+            "intituleAr": "قبلي",
+            "intituleAn": "Kebili"
+        },
+        {
+            "id": 486,
+            "intituleFr": "Matrouha",
+            "intituleAr": "المطروحة",
+            "intituleAn": "Matrouha"
+        },
+        {
+            "id": 487,
+            "intituleFr": "Rjim Maatoug",
+            "intituleAr": "رجيم معتوق",
+            "intituleAn": "Rjim Maatoug"
+        },
+        {
+            "id": 483,
+            "intituleFr": "Souk El Ahad",
+            "intituleAr": "سوق الأحد",
+            "intituleAn": "Souk El Ahad"
+        }
+    ]
+    },
+    "Le Kef": {
+        "id_meteo_tunisia": 363,
+        "intituleAr": "الكاف",
+        "delegations":[
+        {
+            "id": 590,
+            "intituleFr": "Dahmani",
+            "intituleAr": "الدهماني",
+            "intituleAn": "Dahmani"
+        },
+        {
+            "id": 583,
+            "intituleFr": "El Ksour",
+            "intituleAr": "القصور",
+            "intituleAn": "El Ksour"
+        },
+        {
+            "id": 585,
+            "intituleFr": "Jerissa",
+            "intituleAr": "الجريسة",
+            "intituleAn": "Jerissa"
+        },
+        {
+            "id": 587,
+            "intituleFr": "Kalâa El Khasba",
+            "intituleAr": "القلعة الخصبة",
+            "intituleAn": "Kalâa El Khasba"
+        },
+        {
+            "id": 588,
+            "intituleFr": "Kalaat Sinane",
+            "intituleAr": "قلعة السنان",
+            "intituleAn": "Kalaat Sinane"
+        },
+        {
+            "id": 636,
+            "intituleFr": "Le Kef",
+            "intituleAr": "الكاف",
+            "intituleAn": "Le Kef"
+        },
+        {
+            "id": 584,
+            "intituleFr": "Le Sers",
+            "intituleAr": "السرس",
+            "intituleAn": "Le Sers"
+        },
+        {
+            "id": 589,
+            "intituleFr": "Nebeur",
+            "intituleAr": "نبر",
+            "intituleAn": "Nebeur"
+        },
+        {
+            "id": 591,
+            "intituleFr": "Sakiet Sidi Youssef",
+            "intituleAr": "ساقية سيدي يوسف",
+            "intituleAn": "Sakiet Sidi Youssef"
+        },
+        {
+            "id": 586,
+            "intituleFr": "Tejerouine",
+            "intituleAr": "تاجروين",
+            "intituleAn": "Tejerouine"
+        },
+        {
+            "id": 1523,
+            "intituleFr": "Tourief",
+            "intituleAr": "الطويرف",
+            "intituleAn": "Tourief"
+        }
+    ]
+    },
+    "Mahdia": {
+        "id_meteo_tunisia": 345,
+        "intituleAr": "المهدية",
+        "delegations": [
+            {
+                "id": 427,
+                "intituleFr": "Boumerdes",
+                "intituleAr": "بومرداس",
+                "intituleAn": "Boumerdes"
+            },
+            {
+                "id": 424,
+                "intituleFr": "Chebba",
+                "intituleAr": "الشابة",
+                "intituleAn": "Chebba"
+            },
+            {
+                "id": 429,
+                "intituleFr": "Chorbane",
+                "intituleAr": "شربان",
+                "intituleAn": "Chorbane"
+            },
+            {
+                "id": 619,
+                "intituleFr": "El Jem",
+                "intituleAr": "الجم",
+                "intituleAn": "El Jem"
+            },
+            {
+                "id": 430,
+                "intituleFr": "Hbira",
+                "intituleAr": "هبيرة",
+                "intituleAn": "Hbira"
+            },
+            {
+                "id": 423,
+                "intituleFr": "Ksour Essef",
+                "intituleAr": "قصور الساف",
+                "intituleAn": "Ksour Essef"
+            },
+            {
+                "id": 618,
+                "intituleFr": "Mahdia",
+                "intituleAr": "المهدية",
+                "intituleAn": "Mahdia"
+            },
+            {
+                "id": 425,
+                "intituleFr": "Malloulech",
+                "intituleAr": "مللولش",
+                "intituleAn": "Malloulech"
+            },
+            {
+                "id": 431,
+                "intituleFr": "Ouled Chamekh",
+                "intituleAr": "أولاد شامخ",
+                "intituleAn": "Ouled Chamekh"
+            },
+            {
+                "id": 1084,
+                "intituleFr": "Rejiche",
+                "intituleAr": "الرجيش",
+                "intituleAn": "Rejiche"
+            },
+            {
+                "id": 426,
+                "intituleFr": "Sidi Alouane",
+                "intituleAr": "سيدي علوان",
+                "intituleAn": "Sidi Alouane"
+            },
+            {
+                "id": 428,
+                "intituleFr": "Souassi",
+                "intituleAr": "السواسي",
+                "intituleAn": "Souassi"
+            }
+        ]
+    },
+    "Manouba": {
+        "id_meteo_tunisia": 360,
+        "intituleAr": "منوبة",
+        "delegations": [
+            {
+                "id": 552,
+                "intituleFr": "Borj El Amri",
+                "intituleAr": "برج العامري",
+                "intituleAn": "Borj El Amri"
+            },
+            {
+                "id": 554,
+                "intituleFr": "Douar Hicher",
+                "intituleAr": "دوار هيشر",
+                "intituleAn": "Douar Hicher"
+            },
+            {
+                "id": 551,
+                "intituleFr": "El Battan",
+                "intituleAr": "البطان",
+                "intituleAn": "El Battan"
+            },
+            {
+                "id": 550,
+                "intituleFr": "Jedaida",
+                "intituleAr": "الجديدة",
+                "intituleAn": "Jedaida"
+            },
+            {
+                "id": 633,
+                "intituleFr": "Manouba",
+                "intituleAr": "منوبة",
+                "intituleAn": "Manouba"
+            },
+            {
+                "id": 555,
+                "intituleFr": "Mornaguia",
+                "intituleAr": "المرناقية",
+                "intituleAn": "Mornaguia"
+            },
+            {
+                "id": 553,
+                "intituleFr": "Oued Ellil",
+                "intituleAr": "واد الليل",
+                "intituleAn": "Oued Ellil"
+            },
+            {
+                "id": 556,
+                "intituleFr": "Tebourba",
+                "intituleAr": "طبربة",
+                "intituleAn": "Tebourba"
+            }
+        ]
+    },
+    "Medenine": {
+        "id_meteo_tunisia": 353,
+        "intituleAr": "مدنين",
+        "delegations": [
+            {
+                "id": 495,
+                "intituleFr": "Arram",
+                "intituleAr": "العرام",
+                "intituleAn": "Arram"
+            },
+            {
+                "id": 488,
+                "intituleFr": "Ben Guerdene",
+                "intituleAr": "بن قردان",
+                "intituleAn": "Ben Guerdene"
+            },
+            {
+                "id": 489,
+                "intituleFr": "Beni Khedach",
+                "intituleAr": "بني خداش",
+                "intituleAn": "Beni Khedach"
+            },
+            {
+                "id": 493,
+                "intituleFr": "Djerba Ajim",
+                "intituleAr": "جربة آجيم",
+                "intituleAn": "Djerba Ajim"
+            },
+            {
+                "id": 491,
+                "intituleFr": "Djerba El May",
+                "intituleAr": "جربة الماي",
+                "intituleAn": "Djerba El May"
+            },
+            {
+                "id": 494,
+                "intituleFr": "Djerba Houmt Souk",
+                "intituleAr": "جربة حومة السوق",
+                "intituleAn": "Djerba Houmt Souk"
+            },
+            {
+                "id": 492,
+                "intituleFr": "Djerba Midoun",
+                "intituleAr": "جربة ميدون",
+                "intituleAn": "Djerba Midoun"
+            },
+            {
+                "id": 626,
+                "intituleFr": "Medenine",
+                "intituleAr": "مدنين",
+                "intituleAn": "Medenine"
+            },
+            {
+                "id": 496,
+                "intituleFr": "Sidi Makhlouf",
+                "intituleAr": "سيدي مخلوف",
+                "intituleAn": "Sidi Makhlouf"
+            },
+            {
+                "id": 490,
+                "intituleFr": "Zarzis",
+                "intituleAr": "جرجيس",
+                "intituleAn": "Zarzis"
+            }
+        ]
+    },
+    "Monastir": {
+        "id_meteo_tunisia": 364,
+        "intituleAr": "المنستير",
+        "delegations": [
+            {
+                "id": 601,
+                "intituleFr": "Bekalta",
+                "intituleAr": "البقالطة",
+                "intituleAn": "Bekalta"
+            },
+            {
+                "id": 603,
+                "intituleFr": "Benbla",
+                "intituleAr": "بنبلة",
+                "intituleAn": "Benbla"
+            },
+            {
+                "id": 597,
+                "intituleFr": "Beni Hassan",
+                "intituleAr": "بني حسان",
+                "intituleAn": "Beni Hassan"
+            },
+            {
+                "id": 595,
+                "intituleFr": "Jammel",
+                "intituleAr": "جمال",
+                "intituleAn": "Jammel"
+            },
+            {
+                "id": 602,
+                "intituleFr": "Ksar Helal",
+                "intituleAr": "قصر هلال",
+                "intituleAn": "Ksar Helal"
+            },
+            {
+                "id": 599,
+                "intituleFr": "Ksibet Medyouni",
+                "intituleAr": "قصيبة المديوني",
+                "intituleAn": "Ksibet Medyouni"
+            },
+            {
+                "id": 598,
+                "intituleFr": "Moknine",
+                "intituleAr": "المكنين",
+                "intituleAn": "Moknine"
+            },
+            {
+                "id": 637,
+                "intituleFr": "Monastir",
+                "intituleAr": "المنستير",
+                "intituleAn": "Monastir"
+            },
+            {
+                "id": 593,
+                "intituleFr": "Ouerdanine",
+                "intituleAr": "الوردانين",
+                "intituleAn": "Ouerdanine"
+            },
+            {
+                "id": 592,
+                "intituleFr": "Sahline",
+                "intituleAr": "الساحلين",
+                "intituleAn": "Sahline"
+            },
+            {
+                "id": 600,
+                "intituleFr": "Sayada Lamta Bouhjar",
+                "intituleAr": "صيادة",
+                "intituleAn": "Sayada Lamta Bouhjar"
+            },
+            {
+                "id": 594,
+                "intituleFr": "Teboulba",
+                "intituleAr": "طبلبة",
+                "intituleAn": "Teboulba"
+            },
+            {
+                "id": 596,
+                "intituleFr": "Zeramdine",
+                "intituleAr": "زرامدين",
+                "intituleAn": "Zeramdine"
+            }
+        ]
+    },
+    "Nabeul": {
+        "id_meteo_tunisia": 350,
+        "intituleAr": "نابل",
+        "delegations": [
+            {
+                "id": 467,
+                "intituleFr": "Beni Khalled",
+                "intituleAr": "بني خلاد",
+                "intituleAn": "Beni Khalled"
+            },
+            {
+                "id": 460,
+                "intituleFr": "Beni Khiar",
+                "intituleAr": "بني خيار",
+                "intituleAn": "Beni Khiar"
+            },
+            {
+                "id": 463,
+                "intituleFr": "Bou Argoub",
+                "intituleAr": "بوعرقوب",
+                "intituleAn": "Bou Argoub"
+            },
+            {
+                "id": 468,
+                "intituleFr": "Dar Chaabane Elfehri",
+                "intituleAr": "دار شعبان الفهري",
+                "intituleAn": "Dar Chaabane Elfehri"
+            },
+            {
+                "id": 466,
+                "intituleFr": "El Haouaria",
+                "intituleAr": "الهوارية",
+                "intituleAn": "El Haouaria"
+            },
+            {
+                "id": 457,
+                "intituleFr": "El Mida",
+                "intituleAr": "الميدة",
+                "intituleAn": "El Mida"
+            },
+            {
+                "id": 464,
+                "intituleFr": "Grombalia",
+                "intituleAr": "قرمبالية",
+                "intituleAn": "Grombalia"
+            },
+            {
+                "id": 469,
+                "intituleFr": "Hammam Ghezaz",
+                "intituleAr": "حمام الغزاز",
+                "intituleAn": "Hammam Ghezaz"
+            },
+            {
+                "id": 461,
+                "intituleFr": "Hammamet",
+                "intituleAr": "الحمامات",
+                "intituleAn": "Hammamet"
+            },
+            {
+                "id": 455,
+                "intituleFr": "Kelibia",
+                "intituleAr": "قليبية",
+                "intituleAn": "Kelibia"
+            },
+            {
+                "id": 459,
+                "intituleFr": "Korba",
+                "intituleAr": "قربة",
+                "intituleAn": "Korba"
+            },
+            {
+                "id": 458,
+                "intituleFr": "Menzel Bouzelfa",
+                "intituleAr": "منزل بوزلفة",
+                "intituleAn": "Menzel Bouzelfa"
+            },
+            {
+                "id": 456,
+                "intituleFr": "Menzel Temime",
+                "intituleAr": "منزل تميم",
+                "intituleAn": "Menzel Temime"
+            },
+            {
+                "id": 623,
+                "intituleFr": "Nabeul",
+                "intituleAr": "نابل",
+                "intituleAn": "Nabeul"
+            },
+            {
+                "id": 465,
+                "intituleFr": "Slimane",
+                "intituleAr": "سليمان",
+                "intituleAn": "Slimane"
+            },
+            {
+                "id": 462,
+                "intituleFr": "Takelsa",
+                "intituleAr": "تاكلسة",
+                "intituleAn": "Takelsa"
+            }
+        ]
+    },
+    "Sfax": {
+        "id_meteo_tunisia": 359,
+        "intituleAr": "صفاقس",
+        "delegations": [
+            {
+                "id": 540,
+                "intituleFr": "Agareb",
+                "intituleAr": "عقارب",
+                "intituleAn": "Agareb"
+            },
+            {
+                "id": 538,
+                "intituleFr": "Bir Ali Ben Khelifa",
+                "intituleAr": "بئر علي بن خليفة",
+                "intituleAn": "Bir Ali Ben Khelifa"
+            },
+            {
+                "id": 545,
+                "intituleFr": "El Amra",
+                "intituleAr": "العامرة",
+                "intituleAn": "El Amra"
+            },
+            {
+                "id": 541,
+                "intituleFr": "El Hencha",
+                "intituleAr": "الحنشة",
+                "intituleAn": "El Hencha"
+            },
+            {
+                "id": 539,
+                "intituleFr": "Ghraiba",
+                "intituleAr": "الغريبة",
+                "intituleAn": "Ghraiba"
+            },
+            {
+                "id": 536,
+                "intituleFr": "Jebiniana",
+                "intituleAr": "جبنيانة",
+                "intituleAn": "Jebiniana"
+            },
+            {
+                "id": 543,
+                "intituleFr": "Kerkennah El Attaya",
+                "intituleAr": "قرقنة العطايا",
+                "intituleAn": "Kerkennah El Attaya"
+            },
+            {
+                "id": 544,
+                "intituleFr": "Kerkennah Mellita",
+                "intituleAr": "قرقنة مليتة",
+                "intituleAn": "Kerkennah Mellita"
+            },
+            {
+                "id": 537,
+                "intituleFr": "Mahres",
+                "intituleAr": "المحرس",
+                "intituleAn": "Mahres"
+            },
+            {
+                "id": 542,
+                "intituleFr": "Menzel Chaker",
+                "intituleAr": "منزل شاكر",
+                "intituleAn": "Menzel Chaker"
+            },
+            {
+                "id": 548,
+                "intituleFr": "Sakiet Eddaier",
+                "intituleAr": "ساقية الداير",
+                "intituleAn": "Sakiet Eddaier"
+            },
+            {
+                "id": 547,
+                "intituleFr": "Sakiet Ezzit",
+                "intituleAr": "ساقية الزيت",
+                "intituleAn": "Sakiet Ezzit"
+            },
+            {
+                "id": 632,
+                "intituleFr": "Sfax",
+                "intituleAr": "صفاقس",
+                "intituleAn": "Sfax"
+            },
+            {
+                "id": 546,
+                "intituleFr": "Skhira",
+                "intituleAr": "الصخيرة",
+                "intituleAn": "Skhira"
+            },
+            {
+                "id": 549,
+                "intituleFr": "Tina",
+                "intituleAr": "تينة",
+                "intituleAn": "Tina"
+            }
+        ]
+    },
+    "Sidi Bouzid": {
+        "id_meteo_tunisia": 355,
+        "intituleAr": "سيدي بوزيد",
+        "delegations": [
+            {
+                "id": 508,
+                "intituleFr": "Bir El Hafey",
+                "intituleAr": "بئر الحفي",
+                "intituleAn": "Bir El Hafey"
+            },
+            {
+                "id": 1522,
+                "intituleFr": "Hichria",
+                "intituleAr": "الهيشرية",
+                "intituleAn": "Hichria"
+            },
+            {
+                "id": 506,
+                "intituleFr": "Jelma",
+                "intituleAr": "جلمة",
+                "intituleAn": "Jelma"
+            },
+            {
+                "id": 505,
+                "intituleFr": "Meknassi",
+                "intituleAr": "المكناسي",
+                "intituleAn": "Meknassi"
+            },
+            {
+                "id": 510,
+                "intituleFr": "Menzel Bouzayane",
+                "intituleAr": "منزل بو زيان",
+                "intituleAn": "Menzel Bouzayane"
+            },
+            {
+                "id": 511,
+                "intituleFr": "Mezouna",
+                "intituleAr": "المزونة",
+                "intituleAn": "Mezouna"
+            },
+            {
+                "id": 512,
+                "intituleFr": "Ouled Haffouz",
+                "intituleAr": "أولاد حفوز",
+                "intituleAn": "Ouled Haffouz"
+            },
+            {
+                "id": 504,
+                "intituleFr": "Regueb",
+                "intituleAr": "الرقاب",
+                "intituleAn": "Regueb"
+            },
+            {
+                "id": 507,
+                "intituleFr": "Sabbalet Ouled Asker",
+                "intituleAr": "سبالة أولاد عسكر",
+                "intituleAn": "Sabbalet Ouled Asker"
+            },
+            {
+                "id": 509,
+                "intituleFr": "Sidi Ali Ben Aoun",
+                "intituleAr": "سيدي علي بن عون",
+                "intituleAn": "Sidi Ali Ben Aoun"
+            },
+            {
+                "id": 628,
+                "intituleFr": "Sidi Bouzid",
+                "intituleAr": "سيدي بوزيد",
+                "intituleAn": "Sidi Bouzid"
+            },
+            {
+                "id": 513,
+                "intituleFr": "Souk Jedid",
+                "intituleAr": "سوق الجديد",
+                "intituleAn": "Souk Jedid"
+            }
+        ]
+    },
+    "Siliana": {
+        "id_meteo_tunisia": 344,
+        "intituleAr": "سليانة",
+        "delegations": [
+            {
+                "id": 417,
+                "intituleFr": "Bargou",
+                "intituleAr": "برقو",
+                "intituleAn": "Bargou"
+            },
+            {
+                "id": 420,
+                "intituleFr": "Bouarada",
+                "intituleAr": "بوعرادة",
+                "intituleAn": "Bouarada"
+            },
+            {
+                "id": 419,
+                "intituleFr": "El Aroussa",
+                "intituleAr": "العروسة",
+                "intituleAn": "El Aroussa"
+            },
+            {
+                "id": 418,
+                "intituleFr": "Gaafour",
+                "intituleAr": "قعفور",
+                "intituleAn": "Gaafour"
+            },
+            {
+                "id": 414,
+                "intituleFr": "Kesra",
+                "intituleAr": "كسرى",
+                "intituleAn": "Kesra"
+            },
+            {
+                "id": 421,
+                "intituleFr": "Le Krib",
+                "intituleAr": "الكريب",
+                "intituleAn": "Le Krib"
+            },
+            {
+                "id": 415,
+                "intituleFr": "Makther",
+                "intituleAr": "مكثر",
+                "intituleAn": "Makther"
+            },
+            {
+                "id": 416,
+                "intituleFr": "Rouhia",
+                "intituleAr": "الروحية",
+                "intituleAn": "Rouhia"
+            },
+            {
+                "id": 422,
+                "intituleFr": "Sidi Bou Rouis",
+                "intituleAr": "بورويس",
+                "intituleAn": "Sidi Bou Rouis"
+            },
+            {
+                "id": 617,
+                "intituleFr": "Siliana",
+                "intituleAr": "سليانة",
+                "intituleAn": "Siliana"
+            }
+        ]
+    },
+    "Sousse": {
+        "id_meteo_tunisia": 348,
+        "intituleAr": "سوسة",
+        "delegations": [
+            {
+                "id": 437,
+                "intituleFr": "Akouda",
+                "intituleAr": "أكودة",
+                "intituleAn": "Akouda"
+            },
+            {
+                "id": 433,
+                "intituleFr": "Bouficha",
+                "intituleAr": "بوفيشة",
+                "intituleAn": "Bouficha"
+            },
+            {
+                "id": 434,
+                "intituleFr": "Enfida",
+                "intituleAr": "النفيضة",
+                "intituleAn": "Enfida"
+            },
+            {
+                "id": 438,
+                "intituleFr": "Hammam Sousse",
+                "intituleAr": "حمام سوسة",
+                "intituleAn": "Hammam Sousse"
+            },
+            {
+                "id": 435,
+                "intituleFr": "Hergla",
+                "intituleAr": "هرقلة",
+                "intituleAn": "Hergla"
+            },
+            {
+                "id": 439,
+                "intituleFr": "Kalaa Kebira",
+                "intituleAr": "القلعة الكبيرة",
+                "intituleAn": "Kalaa Kebira"
+            },
+            {
+                "id": 443,
+                "intituleFr": "Kalaa Seghira",
+                "intituleAr": "القلعة الصغيرة",
+                "intituleAn": "Kalaa Seghira"
+            },
+            {
+                "id": 442,
+                "intituleFr": "Koundar",
+                "intituleAr": "كندار",
+                "intituleAn": "Koundar"
+            },
+            {
+                "id": 440,
+                "intituleFr": "Msaken",
+                "intituleAr": "مساكن",
+                "intituleAn": "Msaken"
+            },
+            {
+                "id": 436,
+                "intituleFr": "Sidi Bouali",
+                "intituleAr": "سيدي بوعلي",
+                "intituleAn": "Sidi Bouali"
+            },
+            {
+                "id": 441,
+                "intituleFr": "Sidi Elheni",
+                "intituleAr": "سيدي الهاني",
+                "intituleAn": "Sidi Elheni"
+            },
+            {
+                "id": 621,
+                "intituleFr": "Sousse",
+                "intituleAr": "سوسة",
+                "intituleAn": "Sousse"
+            }
+        ]
+    },
+    "Tataouine": {
+        "id_meteo_tunisia": 351,
+        "intituleAr": "تطاوين",
+        "delegations": [
+            {
+                "id": 474,
+                "intituleFr": "Bir Lahmar",
+                "intituleAr": "بئر الأحمر",
+                "intituleAn": "Bir Lahmar"
+            },
+            {
+                "id": 1524,
+                "intituleFr": "Bni Mhira",
+                "intituleAr": "بني مهيرة",
+                "intituleAn": "Bni Mhira"
+            },
+            {
+                "id": 475,
+                "intituleFr": "Borj El Khadra",
+                "intituleAr": "برج الخضراء",
+                "intituleAn": "Borj El Khadra"
+            },
+            {
+                "id": 470,
+                "intituleFr": "Dehiba",
+                "intituleAr": "الذهيبة",
+                "intituleAn": "Dehiba"
+            },
+            {
+                "id": 476,
+                "intituleFr": "El Borma",
+                "intituleAr": "البرمة",
+                "intituleAn": "El Borma"
+            },
+            {
+                "id": 473,
+                "intituleFr": "Ghomrassen",
+                "intituleAr": "غمراسن",
+                "intituleAn": "Ghomrassen"
+            },
+            {
+                "id": 471,
+                "intituleFr": "Remada",
+                "intituleAr": "رمادة",
+                "intituleAn": "Remada"
+            },
+            {
+                "id": 472,
+                "intituleFr": "Smar",
+                "intituleAr": "السمار",
+                "intituleAn": "Smar"
+            },
+            {
+                "id": 624,
+                "intituleFr": "Tataouine",
+                "intituleAr": "تطاوين",
+                "intituleAn": "Tataouine"
+            }
+        ]
+    },
+    "Tozeur": {
+        "id_meteo_tunisia": 352,
+        "intituleAr": "توزر",
+        "delegations": [
+            {
+                "id": 478,
+                "intituleFr": "Degueche",
+                "intituleAr": "دقاش",
+                "intituleAn": "Degueche"
+            },
+            {
+                "id": 481,
+                "intituleFr": "Hammat Al Jarid",
+                "intituleAr": "حامة الجريد",
+                "intituleAn": "Hammat Al Jarid"
+            },
+            {
+                "id": 479,
+                "intituleFr": "Hazoua",
+                "intituleAr": "حزوة",
+                "intituleAn": "Hazoua"
+            },
+            {
+                "id": 477,
+                "intituleFr": "Nefta",
+                "intituleAr": "نفطة",
+                "intituleAn": "Nefta"
+            },
+            {
+                "id": 480,
+                "intituleFr": "Tameghza",
+                "intituleAr": "تمغزة",
+                "intituleAn": "Tameghza"
+            },
+            {
+                "id": 625,
+                "intituleFr": "Tozeur",
+                "intituleAr": "توزر",
+                "intituleAn": "Tozeur"
+            }
+        ]
+    },
+    "Tunis": {
+        "id_meteo_tunisia": 342,
+        "intituleAr": "تونس",
+        "delegations": [
+            {
+                "id": 404,
+                "intituleFr": "Bab Bhar",
+                "intituleAr": "باب بحر",
+                "intituleAn": "Bab Bhar"
+            },
+            {
+                "id": 395,
+                "intituleFr": "Bab Souika",
+                "intituleAr": "باب سويقة",
+                "intituleAn": "Bab Souika"
+            },
+            {
+                "id": 394,
+                "intituleFr": "Bardo",
+                "intituleAr": "باردو",
+                "intituleAn": "Bardo"
+            },
+            {
+                "id": 387,
+                "intituleFr": "Carthage",
+                "intituleAr": "قرطاج",
+                "intituleAn": "Carthage"
+            },
+            {
+                "id": 389,
+                "intituleFr": "Cite El Khadhra",
+                "intituleAr": "حي الخضراء",
+                "intituleAn": "Cite El Khadhra"
+            },
+            {
+                "id": 397,
+                "intituleFr": "El Hrairia",
+                "intituleAr": "الحرايرية",
+                "intituleAn": "El Hrairia"
+            },
+            {
+                "id": 400,
+                "intituleFr": "El Kabaria",
+                "intituleAr": "كبارية",
+                "intituleAn": "El Kabaria"
+            },
+            {
+                "id": 390,
+                "intituleFr": "El Menzah",
+                "intituleAr": "المنزه",
+                "intituleAn": "El Menzah"
+            },
+            {
+                "id": 399,
+                "intituleFr": "El Ouardia",
+                "intituleAr": "الوردية",
+                "intituleAn": "El Ouardia"
+            },
+            {
+                "id": 393,
+                "intituleFr": "Ettahrir",
+                "intituleAr": "التحرير",
+                "intituleAn": "Ettahrir"
+            },
+            {
+                "id": 396,
+                "intituleFr": "Ezzouhour",
+                "intituleAr": "الزهور",
+                "intituleAn": "Ezzouhour"
+            },
+            {
+                "id": 401,
+                "intituleFr": "Jebel Jelloud",
+                "intituleAr": "جبل جلود",
+                "intituleAn": "Jebel Jelloud"
+            },
+            {
+                "id": 388,
+                "intituleFr": "La Goulette",
+                "intituleAr": "حلق الواد",
+                "intituleAn": "Goulette"
+            },
+            {
+                "id": 386,
+                "intituleFr": "La Marsa",
+                "intituleAr": "المرسى",
+                "intituleAn": "La Marsa"
+            },
+            {
+                "id": 403,
+                "intituleFr": "La Medina",
+                "intituleAr": "المدينة",
+                "intituleAn": "La Medina"
+            },
+            {
+                "id": 406,
+                "intituleFr": "Le Kram",
+                "intituleAr": "الكرم",
+                "intituleAn": "Le Kram"
+            },
+            {
+                "id": 391,
+                "intituleFr": "Omrane",
+                "intituleAr": "العمران",
+                "intituleAn": "Omrane"
+            },
+            {
+                "id": 392,
+                "intituleFr": "Omrane Superieur",
+                "intituleAr": "العمران الأعلى",
+                "intituleAn": "Omrane Superieur"
+            },
+            {
+                "id": 402,
+                "intituleFr": "Sidi El Bechir",
+                "intituleAr": "سيدي البشير",
+                "intituleAn": "Sidi El Bechir"
+            },
+            {
+                "id": 398,
+                "intituleFr": "Sidi Hassine",
+                "intituleAr": "سيدي حسين",
+                "intituleAn": "Sidi Hassine"
+            },
+            {
+                "id": 405,
+                "intituleFr": "Sijoumi",
+                "intituleAr": "السيجومي",
+                "intituleAn": "Sijoumi"
+            },
+            {
+                "id": 615,
+                "intituleFr": "Tunis",
+                "intituleAr": "مدينة تونس",
+                "intituleAn": "Tunis"
+            }
+        ]
+    },
+    "Zaghouan": {
+        "id_meteo_tunisia": 343,
+        "intituleAr": "زغوان",
+        "delegations": [
+            {
+                "id": 410,
+                "intituleFr": "Bir Mcherga",
+                "intituleAr": "بئر مشارقة",
+                "intituleAn": "Bir Mcherga"
+            },
+            {
+                "id": 411,
+                "intituleFr": "El Fahs",
+                "intituleAr": "الفحص",
+                "intituleAn": "El Fahs"
+            },
+            {
+                "id": 412,
+                "intituleFr": "Nadhour",
+                "intituleAr": "الناظور",
+                "intituleAn": "Nadhour"
+            },
+            {
+                "id": 413,
+                "intituleFr": "Saouaf",
+                "intituleAr": "صواف",
+                "intituleAn": "Saouaf"
+            },
+            {
+                "id": 616,
+                "intituleFr": "Zaghouan",
+                "intituleAr": "زغوان",
+                "intituleAn": "Zaghouan"
+            },
+            {
+                "id": 409,
+                "intituleFr": "Zeriba",
+                "intituleAr": "الزريبة",
+                "intituleAn": "Zeriba"
+            }
+        ]
+    }
+}

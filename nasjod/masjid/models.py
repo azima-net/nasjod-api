@@ -54,6 +54,23 @@ class Masjid(ObjectBase):
 
     class Meta:
         verbose_name_plural = "Masajid"
+    @property
+    def are_infos_complete(self):
+        """Check if all non-boolean fields are filled."""
+        required_fields = [
+            'name', 'address', 'cover', 'size'
+        ]
+        for field in required_fields:
+            if getattr(self, field) in [None, '', False]:
+                return False
+        # Check if linked to IqamaTime
+        has_iqama_time = self.iqamatime_set.exists()
+
+        # Check if linked to JumuahPrayerTime
+        has_jumuah_prayer_time = self.jumuahprayertime_set.exists()
+
+        # Return True only if all conditions are met
+        return has_iqama_time and has_jumuah_prayer_time
 
     def __str__(self):
         return self.name
