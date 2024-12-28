@@ -1,10 +1,10 @@
 from django import forms
 from django.db import models, transaction
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.gis import admin as geoadmin
 from core.admin import export_to_csv
 from .models import Masjid, SuggestionMasjidModification
-from prayertime.models import PrayerTime
+from prayertime.models import IqamaTime, JumuahPrayerTime, PrayerTime
 
 
 class MasjidAdminForm(forms.ModelForm):
@@ -104,7 +104,6 @@ class MasjidAdmin(geoadmin.GISModelAdmin):
         "uuid",
         "name",
         "telephone",
-        "address",
         ]
     actions = [export_to_csv]
 
@@ -113,13 +112,93 @@ admin.site.register(Masjid, MasjidAdmin)
 @admin.register(SuggestionMasjidModification)
 class SuggestionMasjidModificationAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'size', 'telephone', 'is_active', 'parking', 'disabled_access',
+        'uuid', 'name', 'size', 'telephone', 'is_active', 'parking', 'disabled_access',
         'ablution_room', 'woman_space', 'adult_courses', 'children_courses',
         'salat_al_eid', 'salat_al_janaza', 'iftar_ramadhan', 'itikef',
         'fajr_iqama', 'dhuhr_iqama', 'asr_iqama', 'maghrib_iqama', 'isha_iqama',
         'jumuah_time', 'first_timeslot_jumuah', 'eid_time', 'created_at', 'updated_at'
     )
-    list_filter = ('is_active', 'size', 'parking', 'disabled_access', 'woman_space')
-    search_fields = ('name', 'telephone', 'message')
-    ordering = ('-created_at',)
+    search_fields = [
+        "uuid",
+        "name",
+        ]
     readonly_fields = ('uuid', 'created_at', 'updated_at')
+
+    @admin.action(description="Accept Suggestion and Update Masjid")
+    def accept_suggestion(self, request, queryset):
+        for suggestion in queryset:
+            try:
+                masjid = suggestion.suggestion_masjid
+                if not masjid:
+                    self.message_user(
+                        request,
+                        f"Suggestion {suggestion.name} does not have a linked Masjid.",
+                        messages.ERROR,
+                    )
+                    continue
+
+                # Update Masjid fields
+                masjid_fields = {
+                    'name': suggestion.name,
+                    'telephone': suggestion.telephone,
+                    'size': suggestion.size,
+                    'cover': suggestion.cover,
+                    'parking': suggestion.parking,
+                    'disabled_access': suggestion.disabled_access,
+                    'ablution_room': suggestion.ablution_room,
+                    'woman_space': suggestion.woman_space,
+                    'adult_courses': suggestion.adult_courses,
+                    'children_courses': suggestion.children_courses,
+                    'salat_al_eid': suggestion.salat_al_eid,
+                    'salat_al_janaza': suggestion.salat_al_janaza,
+                    'iftar_ramadhan': suggestion.iftar_ramadhan,
+                    'itikef': suggestion.itikef,
+                }
+                # Only update fields that are not empty
+                for field, value in masjid_fields.items():
+                    if value not in [None, '', False]:
+                        setattr(masjid, field, value)
+                masjid.save()
+
+                # Update IqamaTime
+                if suggestion.fajr_iqama or suggestion.dhuhr_iqama or suggestion.asr_iqama or suggestion.maghrib_iqama or suggestion.isha_iqama:
+                    iqama_time, created = IqamaTime.objects.get_or_create(
+                        masjid=masjid,
+                    )
+                    iqama_fields = {
+                        'fajr_iqama': suggestion.fajr_iqama,
+                        'dhuhr_iqama': suggestion.dhuhr_iqama,
+                        'asr_iqama': suggestion.asr_iqama,
+                        'maghrib_iqama': suggestion.maghrib_iqama,
+                        'isha_iqama': suggestion.isha_iqama,
+                    }
+                    for field, value in iqama_fields.items():
+                        if value is not None:
+                            setattr(iqama_time, field, value)
+                    iqama_time.save()
+
+                # # Update JumuahPrayerTime
+                if suggestion.jumuah_time or suggestion.first_timeslot_jumuah:
+                    jumuah_prayer_time, created = JumuahPrayerTime.objects.get_or_create(
+                        masjid=masjid,
+                    )
+                    if suggestion.jumuah_time:
+                        jumuah_prayer_time.jumuah_time = suggestion.jumuah_time
+                    if suggestion.first_timeslot_jumuah is not None:
+                        jumuah_prayer_time.first_timeslot_jumuah = suggestion.first_timeslot_jumuah
+                    jumuah_prayer_time.save()
+
+                self.message_user(
+                    request,
+                    f"Successfully accepted suggestion for Masjid: {masjid.name} ",
+                    messages.SUCCESS,
+                )
+            except Exception as e:
+                self.message_user(
+                    request,
+                    f"Error processing suggestion {suggestion.name}: {e}",
+                    messages.ERROR,
+                )
+
+    actions = ['accept_suggestion']
+

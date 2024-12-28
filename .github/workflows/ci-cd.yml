@@ -12,6 +12,7 @@ permissions:
   contents: write
 
 jobs:
+  # Uncomment and adjust the test-and-lint job if needed
   # test-and-lint:
   #   runs-on: ubuntu-latest
   #   if: github.event_name == 'pull_request'
@@ -39,7 +40,9 @@ jobs:
 
   create-release:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    if: |
+      (github.event_name == 'push' || github.event_name == 'pull_request') &&
+      !startsWith(github.event.head_commit.message, 'Update version.txt')
 
     steps:
       - name: Checkout code
@@ -91,7 +94,7 @@ jobs:
           # Update version.txt with the new version
           echo "$NEW_VERSION" > version.txt
 
-          # Commit the updated version.txt
+          # Commit the updated version.txt without [skip ci]
           git add version.txt
           git commit -m "Update version.txt to v$NEW_VERSION"
 
@@ -142,22 +145,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy SSH key
+      - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.VPS_SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Deploy to VPS
         env:
-          SSH_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
           SSH_USER: ${{ secrets.VPS_SSH_USER }}
           SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 $SSH_USER@$SSH_HOST << 'EOF'
             cd /opt/projects/nasjod
             docker-compose pull app front
             docker-compose up -d app front
