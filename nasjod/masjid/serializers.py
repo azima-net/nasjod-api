@@ -161,8 +161,6 @@ class SuggestionMasjidModificationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # Handle the address
-        print("validated_data")
-        print(validated_data)
         address_data = validated_data.pop('address', None)
         if address_data:
             address = Address.objects.create(**address_data)
