@@ -1,7 +1,8 @@
 from django.db import models
+from django.db.models import Q, OuterRef, Subquery, Exists
 from django_filters import rest_framework as filters
 from .models import Masjid
-from prayertime.models import IqamaTime, JumuahPrayerTime
+from prayertime.models import PrayerTime, IqamaTime, JumuahPrayerTime
 
 
 class MasjidFilter(filters.FilterSet):
@@ -14,6 +15,43 @@ class MasjidFilter(filters.FilterSet):
     country = filters.CharFilter(field_name='address__country', lookup_expr='icontains')
     are_infos_complete = filters.BooleanFilter(method='filter_are_infos_complete')
 
+    jumuah_time_from = filters.TimeFilter(method='filter_jumuah_time_from')
+
+    def filter_jumuah_time_from(self, queryset, name, value):
+        """
+        Include Masjids that have at least one JumuahPrayerTime
+        whose 'effective' Jumuah time >= `value`.
+
+        - If first_timeslot_jumuah=False, we compare jumuah_time >= value
+        - If first_timeslot_jumuah=True, we compare the Dhuhr time from
+          PrayerTime (same date, same masjid) >= value
+        """
+
+        # Subquery to retrieve Dhuhr time from PrayerTime for the same date & masjid
+        dhuhr_time_subq = PrayerTime.objects.filter(
+            date=OuterRef('date'),
+            masjids=OuterRef('masjid_id')
+        ).values('dhuhr')[:1]
+
+        # Subquery that finds all JumuahPrayerTime rows for each Masjid
+        # that meet the "jumuah_time_from >= value" criterion
+        jumuah_filter_subq = (
+        JumuahPrayerTime.objects
+        .annotate(dhuhr_time=Subquery(dhuhr_time_subq))
+        # First filter by matching Masjid
+        .filter(masjid=OuterRef('pk'))
+        # Then handle the "either jumuah_time or Dhuhr >= value" logic
+        .filter(
+            Q(first_timeslot_jumuah=False, jumuah_time__gte=value) |
+            Q(first_timeslot_jumuah=True,  dhuhr_time__gte=value)
+        )
+    )
+        # Filter Masjids to those that have at least one matching Jumuah time
+        return (
+            queryset
+            .filter(Exists(jumuah_filter_subq))
+            .distinct()
+        )
 
     class Meta:
         model = Masjid
