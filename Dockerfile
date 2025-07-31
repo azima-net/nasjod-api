@@ -33,6 +33,11 @@ RUN pip install -r requirements.txt
 # Copy application code
 COPY ./nasjod /app/
 
+# Create the log file and set permissions
+RUN touch /app/throttling.log && \
+    chown user:user /app/throttling.log && \
+    chmod 666 /app/throttling.log
+
 # Copy and make scripts executable
 COPY ./scripts /scripts
 RUN chmod +x /scripts/*
