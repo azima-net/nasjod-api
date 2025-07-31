@@ -33,6 +33,13 @@ RUN pip install -r requirements.txt
 # Copy application code
 COPY ./nasjod /app/
 
+RUN adduser -D user
+
+# Create the log file and set permissions
+RUN touch /app/throttling.log && \
+    chown user:user /app/throttling.log && \
+    chmod 666 /app/throttling.log
+
 # Copy and make scripts executable
 COPY ./scripts /scripts
 RUN chmod +x /scripts/*
@@ -40,9 +47,10 @@ RUN chmod +x /scripts/*
 # Create necessary directories and set permissions
 RUN mkdir -p /vol/web/media
 RUN mkdir -p /vol/web/static
-RUN adduser -D user
 RUN chown -R user:user /vol/
 RUN chmod -R 755 /vol/web
+
+# Use non-root user
 USER user
 
 # Define volume
