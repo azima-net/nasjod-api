@@ -5,13 +5,14 @@ from django.contrib.gis.db import models as geomodels
 
 
 class Address(models.Model):
+    country = models.CharField(max_length=100)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    street = models.CharField(max_length=255, blank=True, null=True)
+    zip_code = models.CharField(max_length=10, blank=True, null=True)
     additional_info = models.CharField(max_length=255, blank=True, null=True)
     route_km_marker = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    street = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
-    state = models.CharField(max_length=100, blank=True, null=True)
-    zip_code = models.CharField(max_length=10, blank=True, null=True)
-    country = models.CharField(max_length=100)
     coordinates = geomodels.PointField()
     
     def __str__(self):
