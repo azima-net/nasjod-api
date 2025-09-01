@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from django.db import transaction
 from django.contrib.auth import get_user_model
+from core._helpers import get_next_friday
 from rest_framework import serializers
 
 from .models import Masjid, SuggestionMasjidModification
@@ -74,7 +75,7 @@ class MasjidSerializer(serializers.ModelSerializer):
         response_data = []
         for jumuah_prayer_time in jumuah_prayer_times:
             response_data.append({
-                'date': jumuah_prayer_time.get_friday_date,
+                'date': get_next_friday(),
                 'jumuah_time': jumuah_prayer_time.get_jumuah_time(),
                 'first_timeslot_jumuah': jumuah_prayer_time.first_timeslot_jumuah
             })

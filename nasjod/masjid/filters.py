@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q, OuterRef, Subquery, Exists
+from core._helpers import get_next_friday
 from django_filters import rest_framework as filters
 from .models import Masjid
 from prayertime.models import PrayerTime, IqamaTime, JumuahPrayerTime
@@ -30,7 +31,7 @@ class MasjidFilter(filters.FilterSet):
 
         # Subquery to retrieve Dhuhr time from PrayerTime for the same date & masjid
         dhuhr_time_subq = PrayerTime.objects.filter(
-            date=OuterRef('date'),
+            date=get_next_friday(),
             masjids=OuterRef('masjid_id')
         ).values('dhuhr')[:1]
 
