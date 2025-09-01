@@ -39,7 +39,8 @@ class JumuahPrayerTime(BasePrayerTime):
             models.UniqueConstraint(fields=['masjid', 'date', 'jumuah_time'], name='unique_jumuah_time_per_day_per_masjid')
         ]
 
-    def _get_date(self):
+    @property
+    def get_friday_date(self):
         """Returns the date of the next Friday from today."""
         today = date.today()
         friday_date = today + timedelta((4 - today.weekday()) % 7)
@@ -49,7 +50,7 @@ class JumuahPrayerTime(BasePrayerTime):
         """Returns the appropriate Jumuah time based on whether it's the first timeslot."""
         if self.first_timeslot_jumuah:
             # Get the corresponding Dhuhr prayer time for this date and masjid
-            dhuhr_prayer_time = PrayerTime.objects.filter(date=self._get_date(), masjids=self.masjid).first()
+            dhuhr_prayer_time = PrayerTime.objects.filter(date=self.get_friday_date, masjids=self.masjid).first()
             if dhuhr_prayer_time:
                 return dhuhr_prayer_time.dhuhr
             return None  # Return None if no Dhuhr time found
@@ -62,7 +63,7 @@ class JumuahPrayerTime(BasePrayerTime):
             raise ValidationError("Jumuah prayer time can only be set on a Friday.")
 
     def __str__(self):
-        return f"{self.masjid.name} - {self._get_date()} - {self.jumuah_time}"
+        return f"{self.masjid.name} - {self.get_friday_date} - {self.jumuah_time}"
 
 
 class BaseLocatedPrayerTime(BasePrayerTime):

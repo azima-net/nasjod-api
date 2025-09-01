@@ -74,7 +74,7 @@ class MasjidSerializer(serializers.ModelSerializer):
         response_data = []
         for jumuah_prayer_time in jumuah_prayer_times:
             response_data.append({
-                'date': jumuah_prayer_time.date,
+                'date': jumuah_prayer_time.get_friday_date,
                 'jumuah_time': jumuah_prayer_time.get_jumuah_time(),
                 'first_timeslot_jumuah': jumuah_prayer_time.first_timeslot_jumuah
             })
