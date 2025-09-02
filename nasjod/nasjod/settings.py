@@ -236,6 +236,7 @@ if THROTTLE_ENABLED:
         'user': '10000/day',
         'anon': '1000/day',
         'anon_create_masjid': '5/min',
+        'anon_create_suggestion_masjid_modification': '5/min',
     }
 
 REST_FRAMEWORK = {

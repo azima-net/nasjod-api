@@ -1,13 +1,10 @@
-import json
-import os
-from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.decorators import action
-from rest_framework.response import Response
 
-from core.throttling import CreateMasjidAnonThrottle
+from core.throttling import CreateMasjidAnonThrottle, CreateSuggestionMasjidModificationAnonThrottle
 
 import logging
 
@@ -39,6 +36,10 @@ class MasjidViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             return [CreateMasjidAnonThrottle()]
         return super().get_throttles()
+    
+    @method_decorator(csrf_exempt)
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
 class SuggestionMasjidModificationViewSet(viewsets.ModelViewSet):
     """
@@ -49,3 +50,19 @@ class SuggestionMasjidModificationViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name', 'suggestion_masjid__uuid']
     lookup_field = "uuid"
+
+    def get_permissions(self):
+        if self.action in ('destroy', 'update',):
+            self.permission_classes = [IsAuthenticated, IsAdminUser]
+        else:
+            self.permission_classes = []
+        return super().get_permissions()
+
+    @method_decorator(csrf_exempt)
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+    
+    def get_throttles(self):
+        if self.action == 'create':
+            return [CreateSuggestionMasjidModificationAnonThrottle()]
+        return super().get_throttles()
