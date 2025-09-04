@@ -64,9 +64,6 @@ class MasjidSerializer(serializers.ModelSerializer):
         return IqamaTimeMasjidSerializer(iqama_times, many=True).data
 
     def get_jumuah_prayer_time_this_week(self, obj):
-        # today = date.today()
-        # # Calculate the upcoming Friday
-        # friday = today + timedelta((4 - today.weekday()) % 7)
 
         # Filter JumuahPrayerTime for this mosque and the calculated upcoming Friday
         jumuah_prayer_times = JumuahPrayerTime.objects.filter(masjid__uuid=obj.uuid)
@@ -91,12 +88,22 @@ class MasjidSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
+        iqama_data = validated_data.pop('iqamas', None)
+        jumuah_prayer_times_data = validated_data.pop('jumuah_prayer_times', None)
+
         # Check if an address with the same coordinates exists
         try:
             address = Address.objects.get(coordinates=address_data.get('coordinates'))
         except Address.DoesNotExist:
             # If not found, create a new address
             address = Address.objects.create(**address_data)
+
+        if iqama_data:
+            iqama = IqamaTime.objects.create(**iqama_data)
+            validated_data['iqamas'] = iqama
+        if jumuah_prayer_times_data:
+            jumuah_prayer_time = JumuahPrayerTime.objects.create(**jumuah_prayer_times_data)
+            validated_data['jumuah_prayer_times'] = jumuah_prayer_time
 
         # Now create the Masjid with the retrieved or newly created address
         masjid = Masjid.objects.create(address=address, is_active=False, **validated_data)
@@ -105,10 +112,8 @@ class MasjidSerializer(serializers.ModelSerializer):
         if masjid.address and masjid.address.city:
             # 2. Link the Masjid to PrayerTimes in the new city
             matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=masjid.address.city)
-            print(matching_prayer_times)
             with transaction.atomic():
                 masjid.prayertime_set.add(*matching_prayer_times)
-                print(masjid.prayertime_set)
         return masjid
 
     def update(self, instance, validated_data):

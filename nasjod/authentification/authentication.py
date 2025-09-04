@@ -16,8 +16,6 @@ class AppTokenAuthentication(BaseAuthentication):
             return None  # No token provided, let other authenticators handle it
 
         token = auth_header.split(" ")[1]
-        print(token)
-
         try:
             # Decode the token using the signing key and algorithm from SIMPLE_JWT settings
             decoded_token = jwt_decode(

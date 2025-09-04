@@ -124,6 +124,7 @@ class JumuahPrayerTimeMasjidSerializer(serializers.ModelSerializer):
 
 
 class IqamaTimeSerializer(serializers.ModelSerializer):
+    """Serializer for IqamaTime with masjid represented by its UUID."""
     masjid = serializers.SlugRelatedField(
         slug_field='uuid',  # Use 'uuid' for serialization
         queryset=Masjid.objects.all()
@@ -134,6 +135,7 @@ class IqamaTimeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class IqamaTimeMasjidSerializer(serializers.ModelSerializer):
+    """Serializer for IqamaTime used in MasjidSerializer to avoid nested masjid representation."""
     class Meta:
         model = IqamaTime
         fields = ("date", "hijri_date", 
