@@ -20,7 +20,7 @@ class MasjidSerializer(serializers.ModelSerializer):
     jumuah_prayer_times = JumuahPrayerTimeMasjidSerializer(many=True, required=False)
     eid_prayer_times = EidPrayerTimeSerializer(many=True, read_only=True)
     today_prayer_times = serializers.SerializerMethodField()
-    iqamas = IqamaTimeMasjidSerializer(many=True, required=False, source='iqamatime_set')
+    iqamas = IqamaTimeMasjidSerializer(many=True, required=False)
     jumuah_prayer_time_this_week = serializers.SerializerMethodField()
 
     class Meta:

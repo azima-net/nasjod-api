@@ -243,10 +243,11 @@ REST_FRAMEWORK = {
     #SCHEMA_OPENAPI
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
-    # Authentication settings
-    #  'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        ('rest_framework_simplejwt.authentication.JWTAuthentication',)
+        if os.getenv('AUTH_ENABLE', 'True') == 'True'
+        else ()
+    ),
 
     # Permission settings
     # 'DEFAULT_PERMISSION_CLASSES': (

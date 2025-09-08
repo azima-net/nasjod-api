@@ -22,7 +22,7 @@ class BasePrayerTime(models.Model):
 
 
 class IqamaTime(BasePrayerTime):
-    masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE)
+    masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE, related_name='iqamas')
     fajr_iqama = models.IntegerField(null=True, blank=True,)
     dhuhr_iqama = models.IntegerField(null=True, blank=True,)
     asr_iqama = models.IntegerField(null=True, blank=True,)
@@ -31,7 +31,7 @@ class IqamaTime(BasePrayerTime):
 
 
 class JumuahPrayerTime(BasePrayerTime):
-    masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE)
+    masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE, related_name='jumuah_prayer_times')
     jumuah_time = models.TimeField(null=True, blank=True,)
     first_timeslot_jumuah = models.BooleanField(default=False)
 

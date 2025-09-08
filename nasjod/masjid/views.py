@@ -37,7 +37,6 @@ class MasjidViewSet(viewsets.ModelViewSet):
             return [CreateMasjidAnonThrottle()]
         return super().get_throttles()
     
-    @method_decorator(csrf_exempt)
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
@@ -58,7 +57,6 @@ class SuggestionMasjidModificationViewSet(viewsets.ModelViewSet):
             self.permission_classes = []
         return super().get_permissions()
 
-    @method_decorator(csrf_exempt)
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
     
