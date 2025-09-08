@@ -9,7 +9,7 @@ from .models import Masjid, SuggestionMasjidModification
 from core.models import Address
 from core.serializers import AddressSerializer
 from prayertime.models import EidPrayerTime, IqamaTime, JumuahPrayerTime, PrayerTime
-from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeMasjidSerializer, JumuahPrayerTimeSerializer, PrayerTimeMasjidSerializer
+from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeMasjidSerializer, IqamaTimeSerializer, JumuahPrayerTimeMasjidSerializer, JumuahPrayerTimeSerializer, PrayerTimeMasjidSerializer
 
 
 User = get_user_model()
@@ -17,10 +17,10 @@ User = get_user_model()
 
 class MasjidSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
-    jumuah_prayer_times = JumuahPrayerTimeSerializer(many=True, read_only=True)
+    jumuah_prayer_times = JumuahPrayerTimeMasjidSerializer(many=True, required=False)
     eid_prayer_times = EidPrayerTimeSerializer(many=True, read_only=True)
     today_prayer_times = serializers.SerializerMethodField()
-    iqamas = serializers.SerializerMethodField()
+    iqamas = IqamaTimeMasjidSerializer(many=True, required=False, source='iqamatime_set')
     jumuah_prayer_time_this_week = serializers.SerializerMethodField()
 
     class Meta:
@@ -59,18 +59,14 @@ class MasjidSerializer(serializers.ModelSerializer):
         prayer_times = PrayerTime.objects.filter(masjids=obj, date=today)
         return PrayerTimeMasjidSerializer(prayer_times, many=True).data
 
-    def get_iqamas(self, obj):
-        iqama_times = IqamaTime.objects.filter(masjid__uuid=obj.uuid)
-        return IqamaTimeMasjidSerializer(iqama_times, many=True).data
-
     def get_jumuah_prayer_time_this_week(self, obj):
 
         # Filter JumuahPrayerTime for this mosque and the calculated upcoming Friday
-        jumuah_prayer_times = JumuahPrayerTime.objects.filter(masjid__uuid=obj.uuid)
+        jumuah_prayer_times_this_week = JumuahPrayerTime.objects.filter(masjid__uuid=obj.uuid)
 
         # Prepare the response data manually using the model method
         response_data = []
-        for jumuah_prayer_time in jumuah_prayer_times:
+        for jumuah_prayer_time in jumuah_prayer_times_this_week:
             response_data.append({
                 'date': get_next_friday(),
                 'jumuah_time': jumuah_prayer_time.get_jumuah_time(),
@@ -88,8 +84,8 @@ class MasjidSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
-        iqama_data = validated_data.pop('iqamas', None)
-        jumuah_prayer_times_data = validated_data.pop('jumuah_prayer_times', None)
+        iqamas_data = validated_data.pop('iqamas', [])
+        jumuah_prayer_times_data = validated_data.pop('jumuah_prayer_times', [])
 
         # Check if an address with the same coordinates exists
         try:
@@ -98,15 +94,23 @@ class MasjidSerializer(serializers.ModelSerializer):
             # If not found, create a new address
             address = Address.objects.create(**address_data)
 
-        if iqama_data:
-            iqama = IqamaTime.objects.create(**iqama_data)
-            validated_data['iqamas'] = iqama
-        if jumuah_prayer_times_data:
-            jumuah_prayer_time = JumuahPrayerTime.objects.create(**jumuah_prayer_times_data)
-            validated_data['jumuah_prayer_times'] = jumuah_prayer_time
+        masjid = Masjid.objects.create(address=address, is_active=False, **validated_data)
+        
+        # Create iqamas directly
+        for iqama_data in iqamas_data:
+            IqamaTime.objects.create(
+                masjid=masjid,
+                **iqama_data
+            )
+
+        # Create jumuah prayer times directly
+        for jumuah_data in jumuah_prayer_times_data:
+            JumuahPrayerTime.objects.create(
+                masjid=masjid,
+                **jumuah_data
+            )
 
         # Now create the Masjid with the retrieved or newly created address
-        masjid = Masjid.objects.create(address=address, is_active=False, **validated_data)
         
         # If the address has a city, update the prayer times based on city changes
         if masjid.address and masjid.address.city:

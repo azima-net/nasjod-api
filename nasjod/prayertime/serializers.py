@@ -114,13 +114,14 @@ class JumuahPrayerTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JumuahPrayerTime
-        fields = '__all__'
+        fields = ('date', 'jumuah_time', 'first_timeslot_jumuah', 'masjid')
 
 
 class JumuahPrayerTimeMasjidSerializer(serializers.ModelSerializer):
     class Meta:
         model = JumuahPrayerTime
-        fields = ("date", "hijri_date", "jumuah_time")
+        fields = ("date", "hijri_date", "jumuah_time", 'first_timeslot_jumuah',)
+        read_only_fields = ('hijri_date',)
 
 
 class IqamaTimeSerializer(serializers.ModelSerializer):
@@ -132,7 +133,7 @@ class IqamaTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IqamaTime
-        fields = '__all__'
+        fields = ('date', 'fajr_iqama', 'dhuhr_iqama', 'asr_iqama', 'maghrib_iqama', 'isha_iqama', 'masjid')
 
 class IqamaTimeMasjidSerializer(serializers.ModelSerializer):
     """Serializer for IqamaTime used in MasjidSerializer to avoid nested masjid representation."""
@@ -145,3 +146,4 @@ class IqamaTimeMasjidSerializer(serializers.ModelSerializer):
                 "maghrib_iqama",
                 "isha_iqama",
                 )
+        read_only_fields = ('hijri_date',)
