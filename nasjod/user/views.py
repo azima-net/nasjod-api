@@ -26,8 +26,6 @@ class UserViewSet(viewsets.ModelViewSet):
 class UserContributorViewset(viewsets.ModelViewSet):
     queryset = UserContributor.objects.all()
     serializer_class = UserContributorSerializer
-    authentication_classes = [AppTokenAuthentication]
-    permission_classes = [FrontendAppPermission]
 
     def get_queryset(self):
         # Filter the queryset to include only instances where `accept_to_display` is True
