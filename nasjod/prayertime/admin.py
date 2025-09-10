@@ -5,7 +5,7 @@ from .models import PrayerTime, JumuahPrayerTime, EidPrayerTime, IqamaTime
 @admin.register(PrayerTime)
 class PrayerTimeAdmin(admin.ModelAdmin):
     list_display = ('date', 'hijri_date', 'fajr', 'dhuhr', 'asr', 'maghrib', 'isha', 'city')
-    list_filter = ('masjids', 'date')
+    list_filter = ('masjids', 'date', 'location__city')
     search_fields = ('masjids__name', 'location__city')
 
     def city(self, obj):

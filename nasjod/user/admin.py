@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from core.admin import export_to_csv, activate_users, deactivate_users
 from .filters import BirthYearFilter, UserCityFilter
+from .models import UserContributor
 
 
 User = get_user_model()
@@ -29,3 +30,11 @@ class UserAdmin(BaseUserAdmin):
     actions = [export_to_csv, activate_users, deactivate_users]
 
 admin.site.register(User, UserAdmin)
+
+@admin.register(UserContributor)
+class UserContributorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'masjids', 'contribution_date', 'accept_to_display')
+    list_filter = ('accept_to_display', 'contribution_date')
+    search_fields = ('name', 'email', 'masjids')
+    readonly_fields = ('contribution_date',)
+    ordering = ('-contribution_date',)
