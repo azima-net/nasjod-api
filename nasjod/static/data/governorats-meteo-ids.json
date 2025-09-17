@@ -1,0 +1,221 @@
+{
+  "Ariana": {
+    "id_meteo_tunisia": 358,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 631,
+        "Name": "Ariana ville"
+      }
+    ]
+  },
+  "Beja": {
+    "id_meteo_tunisia": 358,
+    "delegations": [
+
+      {
+        "id_meteo_tunisia": 629,
+        "Name": "Beja"
+      }
+    ]
+  },
+  "Ben Arous": {
+    "id_meteo_tunisia": 349,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 622,
+        "Name": "Ben Arous"
+      }
+    ]
+  },
+  "Bizerte": {
+    "id_meteo_tunisia": 361,
+    "delegations": [
+
+      {
+        "id_meteo_tunisia": 634,
+        "Name": "Bizerte"
+      }
+    ]
+  },
+  "Gabes": {
+    "id_meteo_tunisia": 347,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 620,
+        "Name": "Gabes Medina"
+      }
+    ]
+  },
+  "Gafsa": {
+    "id_meteo_tunisia": 365,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 638,
+        "Name": "Gafsa"
+      }
+    ]
+  },
+  "Jendouba": {
+    "id_meteo_tunisia": 354,
+    "delegations": [
+
+      {
+        "id_meteo_tunisia": 627,
+        "Name": "Jendouba"
+      }
+    ]
+  },
+  "Kairouan": {
+    "id_meteo_tunisia": 357,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 630,
+        "Name": "Kairouan"
+      }
+    ]
+  },
+  "Kasserine": {
+    "id_meteo_tunisia": 362,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 635,
+        "Name": "Kasserine"
+      }
+    ]
+  },
+  "Kebili": {
+    "id_meteo_tunisia": 1012,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 482,
+        "Name": "Kebili"
+      }
+    ]
+  },
+  "Le Kef": {
+    "id_meteo_tunisia": 363,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 636,
+        "Name": "Le Kef"
+      }
+    ]
+  },
+  "Mahdia": {
+    "id_meteo_tunisia": 345,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 618,
+        "Name": "Mahdia"
+      }
+    ]
+  },
+  "Manouba": {
+    "id_meteo_tunisia": 360,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 633,
+        "Name": "Manouba"
+      }
+    ]
+  },
+  "Medenine": {
+    "id_meteo_tunisia": 353,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 626,
+        "Name": "Medenine"
+      }
+    ]
+  },
+  "Monastir": {
+    "id_meteo_tunisia": 364,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 637,
+        "Name": "Monastir"
+      }
+    ]
+  },
+  "Nabeul": {
+    "id_meteo_tunisia": 350,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 623,
+        "Name": "Nabeul"
+      }
+    ]
+  },
+  "Sfax": {
+    "id_meteo_tunisia": 359,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 632,
+        "Name": "Sfax"
+      }
+    ]
+  },
+  "Sidi Bouzid": {
+    "id_meteo_tunisia": 355,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 628,
+        "Name": "Sidi Bouzid"
+      }
+    ]
+  },
+  "Siliana": {
+    "id_meteo_tunisia": 344,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 617,
+        "Name": "Siliana"
+      }
+    ]
+  },
+  "Sousse": {
+    "id_meteo_tunisia": 348,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 621,
+        "Name": "Sousse"
+      }
+    ]
+  },
+  "Tataouine": {
+    "id_meteo_tunisia": 351,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 624,
+        "Name": "Tataouine"
+      }
+    ]
+  },
+  "Tozeur": {
+    "id_meteo_tunisia": 352,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 625,
+        "Name": "Tozeur"
+      }
+    ]
+  },
+  "Tunis": {
+    "id_meteo_tunisia": 342,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 615,
+        "Name": "Tunis"
+      }
+    ]
+  },
+  "Zaghouan": {
+    "id_meteo_tunisia": 343,
+    "delegations": [
+      {
+        "id_meteo_tunisia": 616,
+        "Name": "Zaghouan"
+      }
+    ]
+  }
+}
