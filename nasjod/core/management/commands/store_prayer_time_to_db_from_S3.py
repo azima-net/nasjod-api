@@ -1,8 +1,10 @@
 import json
+import os
 from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 from django.core.files.storage import default_storage
+from django.conf import settings
 from core.models import Address
 from prayertime.models import PrayerTime
 from django.db import transaction
@@ -26,6 +28,39 @@ class Command(BaseCommand):
             help='Maximum number of threads for concurrent requests.'
         )
 
+    def load_coordinates_data(self):
+        """Load coordinates data from merged-state-municipality.json file."""
+        file_path = os.path.join(settings.STATIC_ROOT, 'data', 'merged-state-municipality.json')
+        if not os.path.exists(file_path):
+            # Fallback to static files directory
+            file_path = os.path.join(settings.BASE_DIR, 'static', 'data', 'merged-state-municipality.json')
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            self.stderr.write(self.style.ERROR(f"File not found: {file_path}"))
+            return None
+        except json.JSONDecodeError as e:
+            self.stderr.write(self.style.ERROR(f"Invalid JSON in file: {e}"))
+            return None
+
+    def find_coordinates(self, governorate_name, city_name, coordinates_data):
+        """Find coordinates for a given governorate and city."""
+        if not coordinates_data:
+            return None, None
+        
+        for governorate in coordinates_data:
+            if governorate.get('Name', '').upper() == governorate_name.upper():
+                delegations = governorate.get('Delegations', [])
+                for delegation in delegations:
+                    if delegation.get('Name', '').upper() == city_name.upper():
+                        latitude = delegation.get('Latitude')
+                        longitude = delegation.get('Longitude')
+                        if latitude is not None and longitude is not None:
+                            return float(latitude), float(longitude)
+        return None, None
+
     def handle(self, *args, **options):
         governorate_city_pairs = options['governorate_city_pairs']
         max_workers = options['max_workers']
@@ -33,6 +68,11 @@ class Command(BaseCommand):
         if not governorate_city_pairs:
             self.stderr.write(self.style.ERROR("No governorate-city pairs provided. Use --governorate-city-pairs argument."))
             return
+        
+        # Load coordinates data
+        coordinates_data = self.load_coordinates_data()
+        if not coordinates_data:
+            self.stderr.write(self.style.WARNING("Could not load coordinates data. Addresses will be created without coordinates."))
         
         self.stdout.write(self.style.NOTICE(f"Processing {len(governorate_city_pairs)} governorate-city pairs..."))
         
@@ -57,8 +97,11 @@ class Command(BaseCommand):
                 # Get prayer times data from file
                 prayer_times_data = self.get_file_as_dict(filename)
                 
+                # Find coordinates for this governorate-city pair
+                latitude, longitude = self.find_coordinates(governorate, city, coordinates_data)
+                
                 # Store data in database
-                self.store_data(prayer_times_data, governorate, city)
+                self.store_data(prayer_times_data, governorate, city, latitude, longitude)
                 
                 self.stdout.write(self.style.SUCCESS(f"Successfully processed {governorate} - {city}"))
                 
@@ -95,19 +138,27 @@ class Command(BaseCommand):
         except Exception as e:
             raise RuntimeError(f"An error occurred while retrieving the file: {str(e)}")
 
-    def store_data(self, prayer_times_data, governorate_name, city_name):
+    def store_data(self, prayer_times_data, governorate_name, city_name, latitude=None, longitude=None):
         """
         Stores the prayer times data into the database.
         Expected format: {"prayer_times": [{"date": "...", "sobh": "...", ...}, ...]}
         """
         with transaction.atomic():
-            # Create a new Address entry (without coordinates since they're not in the file)
+            # Create coordinates if available
+            coordinates = None
+            if latitude is not None and longitude is not None:
+                coordinates = Point(longitude, latitude)  # Longitude first for Point
+                self.stdout.write(self.style.SUCCESS(f"Found coordinates for {city_name}, {governorate_name}: {latitude}, {longitude}"))
+            else:
+                self.stdout.write(self.style.WARNING(f"No coordinates found for {city_name}, {governorate_name}"))
+            
+            # Create a new Address entry
             try:
                 address = Address.objects.create(
                     city=city_name,
                     state=governorate_name,
                     country="Tunisia",
-                    coordinates=None  # No coordinates in the new format
+                    coordinates=coordinates
                 )
                 self.stdout.write(self.style.SUCCESS(f"Created new address for {city_name}, {governorate_name}."))
             except Exception as e:
