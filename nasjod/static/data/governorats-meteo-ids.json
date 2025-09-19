@@ -9,12 +9,12 @@
     ]
   },
   "Beja": {
-    "id_meteo_tunisia": 358,
+    "id_meteo_tunisia": 356,
     "delegations": [
 
       {
         "id_meteo_tunisia": 629,
-        "Name": "Beja"
+        "Name": "Beja nord"
       }
     ]
   },
@@ -33,7 +33,7 @@
 
       {
         "id_meteo_tunisia": 634,
-        "Name": "Bizerte"
+        "Name": "bizerte nord"
       }
     ]
   },
@@ -51,7 +51,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 638,
-        "Name": "Gafsa"
+        "Name": "Gafsa Sud"
       }
     ]
   },
@@ -70,7 +70,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 630,
-        "Name": "Kairouan"
+        "Name": "Kairouan nord"
       }
     ]
   },
@@ -79,7 +79,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 635,
-        "Name": "Kasserine"
+        "Name": "Kasserine nord"
       }
     ]
   },
@@ -88,7 +88,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 482,
-        "Name": "Kebili"
+        "Name": "Kebili nord"
       }
     ]
   },
@@ -97,7 +97,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 636,
-        "Name": "Le Kef"
+        "Name": "Le Kef est"
       }
     ]
   },
@@ -110,12 +110,12 @@
       }
     ]
   },
-  "Manouba": {
+  "Mannouba": {
     "id_meteo_tunisia": 360,
     "delegations": [
       {
         "id_meteo_tunisia": 633,
-        "Name": "Manouba"
+        "Name": "Mannouba"
       }
     ]
   },
@@ -124,7 +124,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 626,
-        "Name": "Medenine"
+        "Name": "Medenine sud"
       }
     ]
   },
@@ -151,7 +151,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 632,
-        "Name": "Sfax"
+        "Name": "Sfax ville"
       }
     ]
   },
@@ -160,7 +160,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 628,
-        "Name": "Sidi Bouzid"
+        "Name": "Sidi Bouzid Ouest"
       }
     ]
   },
@@ -169,7 +169,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 617,
-        "Name": "Siliana"
+        "Name": "Siliana nord"
       }
     ]
   },
@@ -178,7 +178,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 621,
-        "Name": "Sousse"
+        "Name": "Sousse ville"
       }
     ]
   },
@@ -187,7 +187,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 624,
-        "Name": "Tataouine"
+        "Name": "Tataouine nord"
       }
     ]
   },
@@ -205,7 +205,7 @@
     "delegations": [
       {
         "id_meteo_tunisia": 615,
-        "Name": "Tunis"
+        "Name": "La Medina"
       }
     ]
   },

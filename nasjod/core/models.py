@@ -14,6 +14,19 @@ class Address(models.Model):
     additional_info = models.CharField(max_length=255, blank=True, null=True)
     route_km_marker = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     coordinates = geomodels.PointField()
+
+    def save(self, *args, **kwargs):
+        # normalize to lowercase
+        if self.country:
+            self.country = self.country.lower()
+        if self.state:
+            self.state = self.state.lower()
+        if self.city:
+            self.city = self.city.lower()
+        if self.district:
+            self.district = self.district.lower()
+
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return f"{self.street}, {self.route_km_marker or ''}, {self.city}, {self.state}, {self.zip_code}, {self.country}"
