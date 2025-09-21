@@ -2,6 +2,8 @@ from datetime import date, timedelta
 
 from django.db import transaction
 from django.contrib.auth import get_user_model
+from backend.nasjod.nasjod.core._consts import TUNISIA_PRAYER_TIMES_CITIES
+from django.conf import settings
 from core._helpers import get_next_friday
 from rest_framework import serializers
 
@@ -115,7 +117,11 @@ class MasjidSerializer(serializers.ModelSerializer):
         # If the address has a city, update the prayer times based on city changes
         if masjid.address and masjid.address.city:
             # 2. Link the Masjid to PrayerTimes in the new city
-            matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=masjid.address.city)
+            city_to_use = masjid.address.city
+            # Special handling to use main cities for prayer times
+            if settings.USE_MAIN_CITY_FOR_PRAYER_TIMES:
+                city_to_use = TUNISIA_PRAYER_TIMES_CITIES.get(masjid.address.state.lower())
+            matching_prayer_times = PrayerTime.objects.filter(location__city__iexact=city_to_use)
             with transaction.atomic():
                 masjid.prayertime_set.add(*matching_prayer_times)
         return masjid

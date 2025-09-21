@@ -1,0 +1,27 @@
+
+TUNISIA_PRAYER_TIMES_CITIES = {
+  "ariana": "ariana ville",
+  "beja": "beja nord",
+  "ben arous": "ben arous",
+  "bizerte": "bizerte nord",
+  "gabes": "gabes medina",
+  "gafsa": "gafsa sud",
+  "jendouba": "jendouba",
+  "kairouan": "kairouan nord",
+  "kasserine": "kasserine nord",
+  "kebili": "kebili nord",
+  "le kef": "le kef est",
+  "mahdia": "mahdia",
+  "mannouba": "mannouba",
+  "medenine": "medenine sud",
+  "monastir": "monastir",
+  "nabeul": "nabeul",
+  "sfax": "sfax ville",
+  "sidi bouzid": "sidi bouzid ouest",
+  "siliana": "siliana nord",
+  "sousse": "sousse ville",
+  "tataouine": "tataouine nord",
+  "tozeur": "tozeur",
+  "tunis": "la medina",
+  "zaghouan": "zaghouan"
+}

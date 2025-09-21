@@ -353,3 +353,6 @@ else:
     SECURE_HSTS_SECONDS = 31536000  # 1 year in production
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+
+# Special handling to use main cities for prayer times
+USE_MAIN_CITY_FOR_PRAYER_TIMES = True
