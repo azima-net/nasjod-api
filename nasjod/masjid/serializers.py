@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from django.db import transaction
 from django.contrib.auth import get_user_model
-from backend.nasjod.nasjod.core._consts import TUNISIA_PRAYER_TIMES_CITIES
+from core._consts import TUNISIA_PRAYER_TIMES_CITIES
 from django.conf import settings
 from core._helpers import get_next_friday
 from rest_framework import serializers
