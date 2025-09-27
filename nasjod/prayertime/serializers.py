@@ -133,7 +133,8 @@ class IqamaTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IqamaTime
-        fields = ('date', 'fajr_iqama', 'dhuhr_iqama', 'asr_iqama', 'maghrib_iqama', 'isha_iqama', 'masjid')
+        fields = ('date', 'fajr_iqama', 'dhuhr_iqama', 'dhuhr_iqama_from_asr', 'dhuhr_iqama_in_hours', 'asr_iqama', 
+                'maghrib_iqama', 'isha_iqama', 'masjid')
 
 class IqamaTimeMasjidSerializer(serializers.ModelSerializer):
     """Serializer for IqamaTime used in MasjidSerializer to avoid nested masjid representation."""
@@ -142,6 +143,8 @@ class IqamaTimeMasjidSerializer(serializers.ModelSerializer):
         fields = ("date", "hijri_date", 
                 "fajr_iqama",
                 "dhuhr_iqama",
+                'dhuhr_iqama_from_asr',
+                'dhuhr_iqama_in_hours',
                 "asr_iqama",
                 "maghrib_iqama",
                 "isha_iqama",

@@ -1,6 +1,6 @@
 from core._helpers import get_next_friday
 from hijri_converter import Gregorian
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime, time
 
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -25,9 +25,41 @@ class IqamaTime(BasePrayerTime):
     masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE, related_name='iqamas')
     fajr_iqama = models.IntegerField(null=True, blank=True,)
     dhuhr_iqama = models.IntegerField(null=True, blank=True,)
+    dhuhr_iqama_from_asr= models.IntegerField(null=True, blank=True,)
     asr_iqama = models.IntegerField(null=True, blank=True,)
     maghrib_iqama = models.IntegerField(null=True, blank=True,)
     isha_iqama = models.IntegerField(null=True, blank=True,)
+
+    @property
+    def dhuhr_iqama_in_hours(self):
+        """
+        Returns the Dhuhr iqama time in hours by subtracting dhuhr_iqama_from_asr minutes 
+        from the Asr prayer time for this masjid.
+        """
+        if not self.dhuhr_iqama_from_asr:
+            return None
+        
+        # Get the Asr prayer time for this masjid and date
+        prayer_time = PrayerTime.objects.filter(
+            masjids=self.masjid,
+            date=self.date
+        ).first()
+        
+        if not prayer_time or not prayer_time.asr:
+            return None
+        
+        # Convert Asr time to datetime for calculation
+        asr_datetime = datetime.combine(self.date, prayer_time.asr)
+        
+        # Subtract the minutes using timedelta
+        dhuhr_iqama_datetime = asr_datetime - timedelta(minutes=self.dhuhr_iqama_from_asr)
+
+        return dhuhr_iqama_datetime.time()
+
+    def clean(self):
+        super().clean()
+        if bool(self.dhuhr_iqama) == bool(self.dhuhr_iqama_from_asr):
+            raise ValidationError("Provide either dhuhr_iqama or dhuhr_iqama_from_asr, but not both ")
 
 
 class JumuahPrayerTime(BasePrayerTime):
