@@ -1,3 +1,4 @@
+from django.utils import timezone
 from core._helpers import get_next_friday
 from hijri_converter import Gregorian
 from datetime import date, timedelta, datetime, time
@@ -39,10 +40,10 @@ class IqamaTime(BasePrayerTime):
         if not self.dhuhr_iqama_from_asr:
             return None
         
-        # Get the Asr prayer time for this masjid and date
+        # Get the Asr prayer time for this masjid and today's date
         prayer_time = PrayerTime.objects.filter(
             masjids=self.masjid,
-            date=self.date
+            date=timezone.now().date()
         ).first()
         
         if not prayer_time or not prayer_time.asr:
