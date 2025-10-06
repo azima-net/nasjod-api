@@ -23,6 +23,7 @@ class Masjid(ObjectBase):
     )
 
     name = models.CharField(max_length=255)
+    name_ar = models.CharField(max_length=255, null=True, blank=True)
     address = models.OneToOneField(Address, related_name='address_masjid',
                                    on_delete=models.SET_NULL, null=True, blank=True)
     telephone = models.CharField(max_length=20, null=True, blank=True)
