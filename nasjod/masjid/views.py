@@ -2,6 +2,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from core.throttling import CreateMasjidAnonThrottle, CreateSuggestionMasjidModificationAnonThrottle
@@ -11,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .models import Masjid, SuggestionMasjidModification
-from .serializers import (MasjidSerializer, SuggestionMasjidModificationSerializer)
+from .serializers import (MasjidSerializer, MasjidMapSerializer, SuggestionMasjidModificationSerializer)
 from .filters import MasjidFilter
 from core.permissions import IsManagerOfMasjid
 
@@ -39,6 +41,26 @@ class MasjidViewSet(viewsets.ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+    
+    @action(detail=False, methods=['get'], url_path='map')
+    def map_data(self, request):
+        """
+        Get all mosques for map display with only essential fields (name, lat, lon).
+        Returns all mosques without pagination for optimal map performance.
+        """
+        # Get all active mosques with coordinates
+        queryset = self.get_queryset().filter(
+            is_active=True,
+            address__coordinates__isnull=False
+        ).select_related('address')
+        
+        # Apply any filters if needed (e.g., by city, state)
+        queryset = self.filter_queryset(queryset)
+        
+        # Serialize with lightweight serializer
+        serializer = MasjidMapSerializer(queryset, many=True)
+        
+        return Response(serializer.data)
 
 class SuggestionMasjidModificationViewSet(viewsets.ModelViewSet):
     """

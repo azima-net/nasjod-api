@@ -17,6 +17,15 @@ from prayertime.serializers import EidPrayerTimeSerializer, IqamaTimeMasjidSeria
 User = get_user_model()
 
 
+class MasjidMapSerializer(serializers.ModelSerializer):
+    """Lightweight serializer for map view with only essential fields"""
+    address = AddressSerializer()
+    
+    class Meta:
+        model = Masjid
+        fields = ['uuid', 'name', 'address']
+
+
 class MasjidSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     jumuah_prayer_times = JumuahPrayerTimeMasjidSerializer(many=True, required=False)
