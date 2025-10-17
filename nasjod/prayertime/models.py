@@ -26,6 +26,7 @@ class IqamaTime(BasePrayerTime):
     masjid = models.ForeignKey('masjid.Masjid', on_delete=models.CASCADE, related_name='iqamas')
     fajr_iqama = models.IntegerField(null=True, blank=True,)
     dhuhr_iqama = models.IntegerField(null=True, blank=True,)
+    dhuhr_iqama_hour = models.TimeField(null=True, blank=True,)
     dhuhr_iqama_from_asr= models.IntegerField(null=True, blank=True,)
     asr_iqama = models.IntegerField(null=True, blank=True,)
     maghrib_iqama = models.IntegerField(null=True, blank=True,)
@@ -37,6 +38,9 @@ class IqamaTime(BasePrayerTime):
         Returns the Dhuhr iqama time in hours by subtracting dhuhr_iqama_from_asr minutes 
         from the Asr prayer time for this masjid.
         """
+        if self.dhuhr_iqama_hour:
+            return self.dhuhr_iqama_hour
+
         if not self.dhuhr_iqama_from_asr:
             return None
         
