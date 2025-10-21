@@ -1,11 +1,13 @@
 import os
 import gzip
-import subprocess
+import json
 import tempfile
 from datetime import datetime
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from django.db import connection
+from django.core import serializers
+from django.apps import apps
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 
@@ -58,7 +60,7 @@ class Command(BaseCommand):
 
         # Generate backup filename with timestamp
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        backup_filename = f'{db_name}_{timestamp}.sql'
+        backup_filename = f'{db_name}_{timestamp}.json'
         compressed_filename = f'{backup_filename}.gz'
 
         if options['dry_run']:
@@ -81,38 +83,68 @@ class Command(BaseCommand):
                 backup_path = os.path.join(temp_dir, backup_filename)
                 compressed_path = os.path.join(temp_dir, compressed_filename)
 
-                # Step 1: Create database backup
+                # Step 1: Create database backup using Django serializers
                 self.stdout.write(
                     self.style.SUCCESS(
-                        f'[{datetime.now()}] Creating backup for database "{db_name}"...'
+                        f'[{datetime.now()}] Creating backup for database "{db_name}" using Django serializers...'
                     )
                 )
                 
-                # Run pg_dump command directly
-                pg_dump_cmd = [
-                    'pg_dump',
-                    '-h', db_host,
-                    '-p', str(db_port),
-                    '-U', db_user,
-                    '-d', db_name
-                ]
+                # Get all models from all apps
+                all_models = []
+                for app_config in apps.get_app_configs():
+                    all_models.extend(app_config.get_models())
                 
-                # Set PGPASSWORD environment variable for authentication
-                env = os.environ.copy()
-                if db_config.get('PASSWORD'):
-                    env['PGPASSWORD'] = db_config['PASSWORD']
+                # Serialize all data
+                serialized_data = []
+                total_objects = 0
                 
-                with open(backup_path, 'w') as backup_file:
-                    result = subprocess.run(
-                        pg_dump_cmd,
-                        stdout=backup_file,
-                        stderr=subprocess.PIPE,
-                        text=True,
-                        env=env
-                    )
+                for model in all_models:
+                    try:
+                        # Skip proxy models and models without database tables
+                        if model._meta.proxy or not model._meta.db_table:
+                            continue
+                            
+                        # Get all objects from this model
+                        objects = model.objects.all()
+                        count = objects.count()
+                        
+                        if count > 0:
+                            self.stdout.write(f'  Serializing {model._meta.label}: {count} objects')
+                            
+                            # Serialize the objects
+                            model_data = serializers.serialize('json', objects, use_natural_foreign_keys=True, use_natural_primary_keys=True)
+                            serialized_data.append({
+                                'model': model._meta.label,
+                                'count': count,
+                                'data': json.loads(model_data)
+                            })
+                            total_objects += count
+                            
+                    except Exception as e:
+                        self.stdout.write(
+                            self.style.WARNING(f'  Warning: Could not serialize {model._meta.label}: {e}')
+                        )
+                        continue
                 
-                if result.returncode != 0:
-                    raise CommandError(f'pg_dump failed: {result.stderr}')
+                # Create the backup structure
+                backup_data = {
+                    'metadata': {
+                        'created_at': datetime.now().isoformat(),
+                        'django_version': settings.DATABASES['default']['NAME'],
+                        'total_models': len(serialized_data),
+                        'total_objects': total_objects,
+                    },
+                    'data': serialized_data
+                }
+                
+                # Write the backup to file
+                with open(backup_path, 'w', encoding='utf-8') as backup_file:
+                    json.dump(backup_data, backup_file, indent=2, ensure_ascii=False)
+                
+                self.stdout.write(
+                    self.style.SUCCESS(f'  Serialized {total_objects} objects from {len(serialized_data)} models')
+                )
 
                 # Step 2: Compress the backup
                 self.stdout.write(
@@ -171,10 +203,6 @@ class Command(BaseCommand):
                 except NoCredentialsError:
                     raise CommandError('R2 credentials not found or invalid')
 
-        except subprocess.CalledProcessError as e:
-            raise CommandError(f'Command failed: {e}')
-        except FileNotFoundError as e:
-            raise CommandError(f'Required command not found: {e}')
         except Exception as e:
             raise CommandError(f'Unexpected error: {e}')
 

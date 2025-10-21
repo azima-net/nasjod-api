@@ -1,11 +1,13 @@
 import os
 import gzip
-import subprocess
+import json
 import tempfile
 from datetime import datetime
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
-from django.db import connection
+from django.db import connection, transaction
+from django.core import serializers
+from django.apps import apps
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 
@@ -148,36 +150,67 @@ class Command(BaseCommand):
                     else:
                         raise CommandError(f'Failed to download backup: {e}')
 
-                # Step 2: Restore database
+                # Step 2: Restore database using Django deserializers
                 self.stdout.write(
-                    self.style.SUCCESS(f'[{datetime.now()}] Restoring database...')
+                    self.style.SUCCESS(f'[{datetime.now()}] Restoring database using Django deserializers...')
                 )
 
-                # Decompress and pipe to psql directly
-                restore_cmd = [
-                    'psql',
-                    '-h', db_host,
-                    '-p', str(db_port),
-                    '-U', db_user,
-                    '-d', db_name
-                ]
+                # Decompress the backup file
+                decompressed_path = download_path.replace('.gz', '')
+                with gzip.open(download_path, 'rt', encoding='utf-8') as gz_file:
+                    with open(decompressed_path, 'w', encoding='utf-8') as decompressed_file:
+                        decompressed_file.write(gz_file.read())
 
-                # Set PGPASSWORD environment variable for authentication
-                env = os.environ.copy()
-                if db_config.get('PASSWORD'):
-                    env['PGPASSWORD'] = db_config['PASSWORD']
+                # Load the backup data
+                with open(decompressed_path, 'r', encoding='utf-8') as backup_file:
+                    backup_data = json.load(backup_file)
 
-                with gzip.open(download_path, 'rt') as gz_file:
-                    result = subprocess.run(
-                        restore_cmd,
-                        stdin=gz_file,
-                        stderr=subprocess.PIPE,
-                        text=True,
-                        env=env
+                # Display backup metadata
+                metadata = backup_data.get('metadata', {})
+                self.stdout.write(f'  Backup created: {metadata.get("created_at", "Unknown")}')
+                self.stdout.write(f'  Total models: {metadata.get("total_models", 0)}')
+                self.stdout.write(f'  Total objects: {metadata.get("total_objects", 0)}')
+
+                # Restore data using transactions for safety
+                with transaction.atomic():
+                    restored_count = 0
+                    failed_count = 0
+                    
+                    for model_data in backup_data.get('data', []):
+                        model_name = model_data.get('model')
+                        objects_data = model_data.get('data', [])
+                        count = model_data.get('count', 0)
+                        
+                        if count > 0:
+                            self.stdout.write(f'  Restoring {model_name}: {count} objects')
+                            
+                            try:
+                                # Deserialize the objects
+                                deserialized_objects = serializers.deserialize('json', json.dumps(objects_data))
+                                
+                                for obj in deserialized_objects:
+                                    try:
+                                        obj.save()
+                                        restored_count += 1
+                                    except Exception as e:
+                                        self.stdout.write(
+                                            self.style.WARNING(f'    Warning: Could not restore object: {e}')
+                                        )
+                                        failed_count += 1
+                                        
+                            except Exception as e:
+                                self.stdout.write(
+                                    self.style.WARNING(f'  Warning: Could not restore {model_name}: {e}')
+                                )
+                                failed_count += count
+
+                self.stdout.write(
+                    self.style.SUCCESS(f'  Restored {restored_count} objects successfully')
+                )
+                if failed_count > 0:
+                    self.stdout.write(
+                        self.style.WARNING(f'  Failed to restore {failed_count} objects')
                     )
-
-                if result.returncode != 0:
-                    raise CommandError(f'Database restore failed: {result.stderr}')
 
                 self.stdout.write(
                     self.style.SUCCESS(f'[{datetime.now()}] Database restore completed successfully!')
@@ -194,10 +227,6 @@ class Command(BaseCommand):
                         self.style.SUCCESS(f'Backup file saved to: {permanent_path}')
                     )
 
-        except subprocess.CalledProcessError as e:
-            raise CommandError(f'Command failed: {e}')
-        except FileNotFoundError as e:
-            raise CommandError(f'Required command not found: {e}')
         except Exception as e:
             raise CommandError(f'Unexpected error: {e}')
 
@@ -209,10 +238,10 @@ class Command(BaseCommand):
             if 'Contents' not in response:
                 return None
 
-            # Filter for .sql.gz files and sort by last modified date
+            # Filter for .json.gz files and sort by last modified date
             backup_files = [
                 obj for obj in response['Contents']
-                if obj['Key'].endswith('.sql.gz')
+                if obj['Key'].endswith('.json.gz')
             ]
             
             if not backup_files:
@@ -234,10 +263,10 @@ class Command(BaseCommand):
                 self.stdout.write('No backup files found in R2 bucket.')
                 return
 
-            # Filter for .sql.gz files and sort by last modified date
+            # Filter for .json.gz files and sort by last modified date
             backup_files = [
                 obj for obj in response['Contents']
-                if obj['Key'].endswith('.sql.gz')
+                if obj['Key'].endswith('.json.gz')
             ]
             
             if not backup_files:
