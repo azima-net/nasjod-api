@@ -35,6 +35,11 @@ COPY ./nasjod /app/
 
 RUN adduser -D user
 
+# Make app files readable/writable by the non-root user
+# (COPY preserves the restrictive host file modes but sets owner=root,
+# so without this the non-root user can't even read manage.py)
+RUN chown -R user:user /app
+
 # Create the log file and set permissions
 RUN touch /app/throttling.log && \
     chown user:user /app/throttling.log && \
@@ -57,4 +62,4 @@ USER user
 VOLUME ["/vol/web"]
 
 # Set the entrypoint
-# ENTRYPOINT ["/scripts/entrypoint.sh"]
+ENTRYPOINT ["/scripts/entrypoint.sh"]
